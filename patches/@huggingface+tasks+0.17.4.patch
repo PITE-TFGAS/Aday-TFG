@@ -1,0 +1,20 @@
+diff --git a/node_modules/@huggingface/tasks/src/model-libraries-snippets.ts b/node_modules/@huggingface/tasks/src/model-libraries-snippets.ts
+index 348a187..a8008d0 100644
+--- a/node_modules/@huggingface/tasks/src/model-libraries-snippets.ts
++++ b/node_modules/@huggingface/tasks/src/model-libraries-snippets.ts
+@@ -87,6 +87,7 @@ function get_prompt_from_diffusers_model(model: ModelData): string | undefined {
+ 	if (prompt) {
+ 		return escapeStringForJson(prompt);
+ 	}
++	return undefined; // 🔹 Se agrega un retorno explícito
+ }
+ 
+ export const ben2 = (model: ModelData): string[] => [
+@@ -890,6 +891,7 @@ function get_widget_examples_from_st_model(model: ModelData): string[] | undefin
+ 	if (widgetExample) {
+ 		return [widgetExample.source_sentence, ...widgetExample.sentences];
+ 	}
++	return undefined; // 🔹 Se agrega un retorno explícito
+ }
+ 
+ export const sentenceTransformers = (model: ModelData): string[] => {

@@ -1,0 +1,41 @@
+{
+  "name": "TFG-AdayCC-2025",
+  "version": "1.0.0",
+  "description": "Proyecto de TFG de Aday Cuesta Correa, más concretamente la creación de un chatbot para ayudar a la inclusión de las personas mayores en la web.",
+  "main": "index.js",
+  "scripts": {
+    "push": "rm *~; git pull; git add . ; git commit -m 'Code improvement'; git push",
+    "pull": "git pull",
+    "start": "node dist/bundle.js",
+    "compile": "npx webpack",
+    "doc": "typedoc"
+  },
+  "keywords": [],
+  "author": "Aday Cuesta Correa <adaycuestacorrea@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "stream-browserify": "^3.0.0",
+    "ts-loader": "^8.0.0",
+    "typescript": "^5.8.2",
+    "vm-browserify": "^1.1.2",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^5.2.0"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.0",
+    "@huggingface/inference": "^3.5.2",
+    "@types/node-fetch": "^2.6.12",
+    "axios": "^1.8.3",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
+    "dotenv": "^16.4.7",
+    "node-fetch": "^2.7.0",
+    "os-browserify": "^0.3.0",
+    "patch-package": "^8.0.0",
+    "path-browserify": "^1.0.1",
+    "postinstall-postinstall": "^2.1.0",
+    "process": "^0.11.10",
+    "util": "^0.12.5"
+  }
+}
