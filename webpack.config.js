@@ -8,6 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
+        extensions: ['.ts', '.js'],
         fallback: {
             "path": require.resolve("path-browserify"),
             "os": require.resolve("os-browserify/browser"),

@@ -10,36 +10,31 @@
  *
  */
 
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import GeminiAIClient from './GeminiAIClient';
+import { askQuestion, rl } from './Functions';
 
-// Reemplaza 'TU_API_KEY' con tu clave de API de Google AI Studio
-const genAI = new GoogleGenerativeAI("AIzaSyCGnpOkebWUd1hLjc-ToU1FFS66veG3yMU");
+async function main() {
+  const API_KEY: string = "AIzaSyCGnpOkebWUd1hLjc-ToU1FFS66veG3yMU";
+  const AI_CLIENT: GeminiAIClient = new GeminiAIClient(API_KEY);
 
-let chatHistory: string[] = [];
+  console.log("Bienvenido al chat con el modelo de IA. Escribe 'exit' para salir.");
 
-async function runGeminiModel(prompt: string) {
-    try {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-        // Concatenar el historial con el nuevo prompt
-        const context = chatHistory.join("\n") + "\n" + prompt;
-
-        let result = await model.generateContent(context);
-        let response = await result.response;
-        let text = response.text();
-
-        console.log("Respuesta del modelo Gemini:", text);
-
-        // Añadir el prompt y la respuesta al historial
-        chatHistory.push(`Usuario: ${prompt}`);
-        chatHistory.push(`Modelo: ${text}`);
-    } catch (error) {
-        console.error("Error al ejecutar el modelo Gemini:", error);
+  while (true) {
+    const userInput = await askQuestion("Tú: ");
+    if (userInput.toLowerCase() === 'exit') {
+      break;
     }
+
+    try {
+      const response = await AI_CLIENT.sendMessage(userInput);
+      console.log("IA: " + response);
+    } catch (error) {
+      console.error("Error en la comunicación con el modelo:", error);
+    }
+  }
+
+  console.log("Historial del chat:", AI_CLIENT.getChatHistory());
+  rl.close();
 }
 
-// Ejemplo de uso
-(async () => {
-    await runGeminiModel("Cual es la capital de España?");
-    await runGeminiModel("Que te acabo de preguntar?");
-})();
+main();
