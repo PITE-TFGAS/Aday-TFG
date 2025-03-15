@@ -12,18 +12,18 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistoryManager from "./ChatHistoryManager";
-import DuckDuckGoSearch from "../InternetSearch/DuckDuckGoSearch";
+//import DuckDuckGoSearch from "../InternetSearch/DuckDuckGoSearch";
 
 class GeminiAIClient {
   private genAI: GoogleGenerativeAI;
   private historyManager: ChatHistoryManager;
   private instructions: string;
-  private searchEngine: DuckDuckGoSearch;
+  //private searchEngine: DuckDuckGoSearch;
 
   constructor(apiKey: string, maxMessages: number = 10) {
     this.genAI = new GoogleGenerativeAI(apiKey);
     this.historyManager = new ChatHistoryManager(maxMessages);
-    this.searchEngine = new DuckDuckGoSearch();
+    //this.searchEngine = new DuckDuckGoSearch();
   
     this.instructions = `Eres un asistente que ayuda a personas mayores a navegar por internet y responder preguntas. 
     Debes usar un lenguaje simple y ser paciente. Antes de cada mensaje recibirás un historial de la conversación y, 
