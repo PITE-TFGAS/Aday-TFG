@@ -21,13 +21,11 @@ async function main() {
 
   while (true) {
     const userInput = await askQuestion("Tú: ");
-    if (userInput.toLowerCase() === 'exit') {
-      break;
-    }
+    if (userInput.toLowerCase() === 'exit') break;
 
     try {
       const response = await AI_CLIENT.sendMessage(userInput);
-      console.log("IA: " + response);
+      console.log(`IA: ${response}`);
     } catch (error) {
       console.error("Error en la comunicación con el modelo:", error);
     }
