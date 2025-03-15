@@ -10,7 +10,7 @@
  *
  */
 
-import GeminiAIClient from './GeminiAIClient';
+import GeminiAIClient from './ChatbotEssentials/GeminiAIClient';
 import { askQuestion, rl } from './Functions';
 
 async function main() {
@@ -25,7 +25,7 @@ async function main() {
 
     try {
       const response = await AI_CLIENT.sendMessage(userInput);
-      console.log(`IA: ${response}`);
+      console.log(`Asistente: ${response}`);
     } catch (error) {
       console.error("Error en la comunicación con el modelo:", error);
     }
