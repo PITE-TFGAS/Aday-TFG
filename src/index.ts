@@ -12,14 +12,10 @@
 
 import GeminiAIClient from './ChatbotEssentials/GeminiAIClient';
 import { askQuestion, rl } from './Functions';
-import FirebaseService  from './Database/firebase';
 
 async function main() {
-  const firebaseService = new FirebaseService("Webpages", "tNmGunHlhU7TwsXeRxBH");
-  let data: string = await firebaseService.getData("https://www.cajasiete.com/");
-  console.log(data);
-  firebaseService.close();
-  /*const API_KEY: string = "AIzaSyCGnpOkebWUd1hLjc-ToU1FFS66veG3yMU";
+  
+  const API_KEY: string = "AIzaSyCGnpOkebWUd1hLjc-ToU1FFS66veG3yMU";
   const AI_CLIENT: GeminiAIClient = new GeminiAIClient(API_KEY);
 
   console.log("Bienvenido al chat con el modelo de IA. Escribe 'exit' para salir.");
@@ -37,7 +33,8 @@ async function main() {
   }
 
   console.log("Historial del chat:", AI_CLIENT.getChatHistory());
-  rl.close();*/
+  rl.close();
+  AI_CLIENT.getFirebaseService().close();
 }
 
 main();
