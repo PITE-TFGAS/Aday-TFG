@@ -7,6 +7,7 @@
     "push": "rm *~; git pull; git add . ; git commit -m 'Code improvement'; git push",
     "pull": "git pull",
     "start": "node dist/bundle.js",
+    "build": "webpack --config webpack/webpack.config.js",
     "compile": "npx webpack",
     "doc": "typedoc"
   },
@@ -14,7 +15,9 @@
   "author": "Aday Cuesta Correa <adaycuestacorrea@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@types/chrome": "^0.0.309",
     "@types/prompt-sync": "^4.2.3",
+    "copy-webpack-plugin": "^13.0.0",
     "stream-browserify": "^3.0.0",
     "ts-loader": "^8.0.0",
     "typescript": "^5.8.2",

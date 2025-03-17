@@ -1,11 +1,15 @@
-const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: {
+        popup: './src/popup.ts',
+        background: './src/background.ts',
+        content: './src/content.ts',
+    },
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js', // Genera popup.js, background.js y content.js
+        path: path.resolve(__dirname, '../dist'),
     },
     resolve: {
         extensions: ['.ts', '.js'],
@@ -27,9 +31,9 @@ module.exports = {
         ],
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            process: 'process/browser',
+        new CopyPlugin({
+            patterns: [{ from: ".", to: ".", context: "public" }]
         }),
     ],
-    mode: 'development',
+    mode: 'production',
 };
