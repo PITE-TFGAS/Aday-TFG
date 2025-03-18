@@ -35,6 +35,12 @@ class FirebaseService {
     this.document = document;
   }
 
+  /**
+   * Reads all data from the specified Firestore collection and logs each document's ID and data to the console.
+   * 
+   * @returns {Promise<void>} A promise that resolves when the data has been read and logged.
+   * @throws Will log an error message to the console if there is an issue reading the data.
+   */
   public async readAllData(): Promise<void> {
     try {
       const querySnapshot = await getDocs(collection(this.db, this.collectionName));
@@ -46,15 +52,23 @@ class FirebaseService {
     }
   }
 
+  /**
+   * Retrieves data from a Firestore document based on the provided key.
+   *
+   * @param {string} key - The key to look up in the Firestore document.
+   * @returns {Promise<string | null>} - A promise that resolves to the value associated with the key as a JSON string, or null if the key or document does not exist.
+   *
+   * @throws {Error} - Throws an error if there is an issue reading data from Firestore.
+   */
   public async getData(key: string): Promise<string | null> {
     try {
-      const docRef = doc(this.db, this.collectionName, this.document);  // Referencia al documento
-      const docSnap = await getDoc(docRef);  // Obtener el documento
+      const docRef = doc(this.db, this.collectionName, this.document);
+      const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         const data = docSnap.data();
         if (data && key in data) {
-          return JSON.stringify(data[key]).replace(/\\/g, ""); // Devuelve solo el valor del campo solicitado
+          return JSON.stringify(data[key]).replace(/\\/g, "");
         } else {
           console.log(`La clave '${key}' no existe en el documento.`);
           return null;
@@ -69,7 +83,15 @@ class FirebaseService {
     }
   }
 
-  public async close() {
+  /**
+   * Closes the Firebase application instance.
+   * 
+   * This method deletes the Firebase app associated with this instance,
+   * ensuring that all resources are properly cleaned up.
+   * 
+   * @returns {Promise<void>} A promise that resolves when the app is successfully deleted.
+   */
+  public async close(): Promise<void> {
     await deleteApp(this.app);
   }
 }

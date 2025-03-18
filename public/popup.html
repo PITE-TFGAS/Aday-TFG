@@ -1,59 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            width: 350px; /* Ancho para mejor legibilidad */
-            margin: 0;
-            padding: 10px;
-            font-size: 18px; /* Texto más grande */
-            background-color: #f9f9f9; /* Fondo claro para reducir el cansancio visual */
-        }
-        #chatbox {
-            height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: white; /* Fondo blanco para el área de chat */
-            font-size: 16px; /* Tamaño de fuente adecuado para la lectura */
-        }
-        #userInput {
-            width: calc(100% - 70px); /* Ajuste para el botón más grande */
-            padding: 10px;
-            font-size: 16px; /* Texto más grande en el input */
-            border: 2px solid #ccc; /* Borde más grueso para mejor visibilidad */
-            border-radius: 5px; /* Bordes redondeados */
-        }
-        button {
-            width: 60px; /* Botón más grande */
-            padding: 10px;
-            font-size: 16px; /* Texto más grande en el botón */
-            background-color: #4CAF50; /* Color verde para mejor visibilidad */
-            color: white;
-            border: none;
-            border-radius: 5px; /* Bordes redondeados */
-            cursor: pointer; /* Cursor de mano para indicar que es clickeable */
-        }
-        button:hover {
-            background-color: #45a049; /* Cambio de color al pasar el mouse */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 350px; /* Ancho para mejor legibilidad */
+      margin: 0;
+      padding: 10px;
+      font-size: 18px; /* Texto más grande */
+      background-color: #f9f9f9; /* Fondo claro para reducir el cansancio visual */
+    }
+    #chatbox {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: white; /* Fondo blanco para el área de chat */
+      font-size: 16px; /* Tamaño de fuente adecuado para la lectura */
+    }
+    #userInput {
+      width: calc(100% - 70px); /* Ajuste para el botón más grande */
+      padding: 10px;
+      font-size: 16px; /* Texto más grande en el input */
+      border: 2px solid #ccc; /* Borde más grueso para mejor visibilidad */
+      border-radius: 5px; /* Bordes redondeados */
+    }
+    button {
+      width: 60px; /* Botón más grande */
+      padding: 10px;
+      font-size: 16px; /* Texto más grande en el botón */
+      background-color: #4CAF50; /* Color verde para mejor visibilidad */
+      color: white;
+      border: none;
+      border-radius: 5px; /* Bordes redondeados */
+      cursor: pointer; /* Cursor de mano para indicar que es clickeable */
+    }
+    button:hover {
+      background-color: #45a049; /* Cambio de color al pasar el mouse */
+    }
+    #resetButton {
+      width: 100%; /* Ancho completo */
+      margin-top: 10px; /* Espacio superior */
+      background-color: #f44336; /* Color rojo para indicar acción de limpiar */
+    }
+    #resetButton:hover {
+      background-color: #d32f2f; /* Cambio de color al pasar el mouse */
+    }
+  </style>
 </head>
 <body>
-    <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Escribe un mensaje...">
-    <button id="sendButton">Enviar</button>
+  <div id="chatbox"></div>
+  <input type="text" id="userInput" placeholder="Escribe un mensaje...">
+  <button id="sendButton">Enviar</button>
+  <button id="resetButton">Reiniciar chat</button> <!-- Nuevo botón -->
 
-    <template id="message-template">
-        <div class="message">
-            <strong class="sender"></strong>: <span class="content"></span>
-        </div>
-    </template>
-    <script src="popup.js"></script>
+  <template id="message-template">
+    <div class="message">
+      <strong class="sender"></strong>: <span class="content"></span>
+    </div>
+  </template>
+  <script src="popup.js"></script>
 </body>
 </html>
