@@ -32,7 +32,10 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin({
-            patterns: [{ from: ".", to: ".", context: "public" }]
+          patterns: [
+            { from: ".", to: ".", context: "public" },
+            { from: "./src/Database/prompts.json", to: "Database/prompts.json" } // Añade esta línea
+          ]
         }),
     ],
     mode: 'production',

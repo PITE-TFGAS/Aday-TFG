@@ -22,6 +22,7 @@ class ChatHistoryManager {
   constructor(maxMessages: number = 9) {
     this.chatHistory = [];
     this.maxMessages = maxMessages;
+    this.loadHistoryFromLocalStorage();
   }
 
   /**
@@ -58,6 +59,35 @@ class ChatHistoryManager {
    */
   public clearHistory(): void {
     this.chatHistory = [];
+    this.saveHistoryToLocalStorage();
+  }
+
+  /**
+   * Saves the chat history to local storage.
+   * 
+   * @returns {void}
+   */
+  public saveHistoryToLocalStorage(): void {
+    chrome.storage.local.set({ chatHistory: this.chatHistory }, () => {
+      if (chrome.runtime.lastError) {
+        console.error("Error al guardar el historial de chat:", chrome.runtime.lastError);
+      }
+    });
+  }
+
+  /**
+   * Loads the chat history from local storage.
+   * 
+   * @returns {void}
+   */
+  public loadHistoryFromLocalStorage(): void {
+    chrome.storage.local.get("chatHistory", (result) => {
+      if (chrome.runtime.lastError) {
+        console.error("Error al cargar el historial de chat:", chrome.runtime.lastError);
+        return;
+      }
+      this.chatHistory = result.chatHistory || [];
+    });
   }
 }
 

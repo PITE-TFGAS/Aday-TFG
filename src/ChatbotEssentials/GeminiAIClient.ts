@@ -12,13 +12,13 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistoryManager from "./ChatHistoryManager";
-import FirebaseService  from '../Database/firebase';
+import { readPrompts, getDomain } from "../Functions";
 
 class GeminiAIClient {
   private genAI: GoogleGenerativeAI;
   private historyManager: ChatHistoryManager;
   private instructions: string;
-  private firebaseService: FirebaseService;
+  private actualDomain: string | null = null;
 
   /**
    * Creates an instance of the GeminiAIClient.
@@ -27,14 +27,13 @@ class GeminiAIClient {
    * @param maxMessages - The maximum number of messages to keep in the chat history. Defaults to 10.
    * 
    * @remarks
-   * This constructor initializes the GoogleGenerativeAI, ChatHistoryManager, and FirebaseService instances.
+   * This constructor initializes the GoogleGenerativeAI and ChatHistoryManager instances.
    * It also sets the instructions for the AI to assist elderly users in navigating the internet step by step.
    * The instructions emphasize clarity, patience, and waiting for user confirmation before proceeding.
    */
   constructor(apiKey: string, maxMessages: number = 10) {
     this.genAI = new GoogleGenerativeAI(apiKey);
     this.historyManager = new ChatHistoryManager(maxMessages);
-    this.firebaseService = new FirebaseService("Webpages", "tNmGunHlhU7TwsXeRxBH");
   
     this.instructions = `Eres un asistente que ayuda a personas mayores a navegar por internet paso a paso. Debes ser claro, paciente y evitar repetir confirmaciones innecesarias.
     Si el usuario confirma un paso, avanza al siguiente sin pedir confirmación adicional a menos que sea estrictamente necesario.
@@ -55,7 +54,7 @@ class GeminiAIClient {
    * Sends a message to the Gemini AI model and returns the generated response.
    *
    * @param {string} prompt - The user's message to be sent to the model.
-   * @param {string} [url=null] - Optional URL to fetch additional context data from Firebase.
+   * @param {string} [url=null] - Optional URL to fetch additional context data from prompts.json.
    * @returns {Promise<string>} - A promise that resolves to the model's response.
    * @throws Will throw an error if the model execution fails.
    */
@@ -65,16 +64,33 @@ class GeminiAIClient {
 
       let context = `Instrucciones Iniciales: ${this.instructions}\n`;
       context += `Historial del chat: ${this.historyManager.getFormattedHistory()}\n`;
-      let data: string = await this.firebaseService.getData(url);
-      if (data !== null) context += `Contexto de la página:${data}\n`;
-      context += `Nuevo mensaje del Usuario: ${prompt}`;
+
+      if (url) {
+        const domain = getDomain(url);
+        const data = await readPrompts('../Database/prompts.json');
+        if (domain && data[domain]) {
+          this.actualDomain = domain;
+          if (data[domain][url]) {
+            context += `Contexto de la página: ${JSON.stringify(data[domain][url])}\n`;
+            console.log("Context added for URL:", data[domain][url]);
+          }
+        }
+      } else if (this.actualDomain) {
+        const data = await readPrompts('../Database/prompts.json');
+        if (data[this.actualDomain]) {
+          context += `Contexto del dominio: ${JSON.stringify(data[this.actualDomain])}\n`;
+        }
+      }
   
+      context += `Nuevo mensaje del Usuario: ${prompt}`;
       const result = await model.generateContent(context);
       const response = result.response;
       const text = response.text();
   
       this.historyManager.addMessage("Usuario", prompt);
       this.historyManager.addMessage("Modelo", text);
+  
+      this.historyManager.saveHistoryToLocalStorage();
   
       return text;
     } catch (error) {
@@ -100,15 +116,6 @@ class GeminiAIClient {
    */
   public getChatHistory(): string {
     return this.historyManager.getFormattedHistory();
-  }
-
-  /**
-   * Retrieves the Firebase service instance.
-   *
-   * @returns {FirebaseService} The instance of the Firebase service.
-   */
-  public getFirebaseService(): FirebaseService {
-    return this.firebaseService;
   }
 }
 
