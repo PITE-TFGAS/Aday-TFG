@@ -14,11 +14,10 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
         fallback: {
-            "path": require.resolve("path-browserify"),
-            "os": require.resolve("os-browserify/browser"),
-            "crypto": require.resolve("crypto-browserify"),
-            "stream": require.resolve("stream-browserify"),
-            "vm": require.resolve("vm-browserify"),
+            fs: false,
+            net: false,
+            tls: false,
+            url: require.resolve('url/'),
         },
     },
     module: {

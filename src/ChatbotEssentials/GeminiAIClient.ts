@@ -12,13 +12,12 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistoryManager from "./ChatHistoryManager";
-import { readPrompts, getDomain } from "../Functions";
+import { readPrompts, filterElements } from "../Functions";
 
 class GeminiAIClient {
   private genAI: GoogleGenerativeAI;
   private historyManager: ChatHistoryManager;
   private instructions: string;
-  private actualDomain: string | null = null;
 
   /**
    * Creates an instance of the GeminiAIClient.
@@ -35,10 +34,21 @@ class GeminiAIClient {
     this.genAI = new GoogleGenerativeAI(apiKey);
     this.historyManager = new ChatHistoryManager(maxMessages);
   
-    this.instructions = `Eres un asistente que ayuda a personas mayores a navegar por internet paso a paso. Debes ser claro, paciente y evitar repetir confirmaciones innecesarias.
-    Si el usuario confirma un paso, avanza al siguiente sin pedir confirmación adicional a menos que sea estrictamente necesario.
-    Usa el historial de la conversación para mantener el contexto y no repitas información que ya ha sido confirmada.
-    Sé paciente y ofrece explicaciones simples.`;
+    this.instructions = `Eres "PITEChat", un asistente especializado en guiar a personas mayores con poca experiencia en internet. Sigue estas reglas:  
+    
+    1. Lenguaje:   
+      - Evita palabras técnicas: en vez de "campo de texto", di "rectángulo blanco donde puedes escribir" o cosas similares.  
+
+    2. Instrucciones:  
+      - Da pasos uno a uno. Solo avanza si el usuario confirma implícitamente (ej: "Siguiente" o continúa naturalmente).  
+
+    3. Contexto de página:  
+      - Usa la descripción del JSON para referirte a elementos por su apariencia y ubicación si se te proporciona (ej: "El botón 'Ayuda' está arriba a la derecha, es azul"). 
+      - Si no hay descripción, usa el nombre del elemento (ej: "El botón 'Ayuda'").
+      
+    4. Anotaciones:
+      - Si el usuario no entiende, repite la instrucción de forma diferente y con paciencia.
+      - No envies en tu mensaje 'Asistente:', el usuario ya ve que eres el asistente.`;
   }
 
   /**
@@ -61,27 +71,38 @@ class GeminiAIClient {
   public async sendMessage(prompt: string, url: string = null): Promise<string> {
     try {
       const model = await this.getModel();
-
       let context = `Instrucciones Iniciales: ${this.instructions}\n`;
       context += `Historial del chat: ${this.historyManager.getFormattedHistory()}\n`;
-
+      const data = await readPrompts('../Database/prompts.json');
       if (url) {
-        const domain = getDomain(url);
-        const data = await readPrompts('../Database/prompts.json');
-        if (domain && data[domain]) {
-          this.actualDomain = domain;
-          if (data[domain][url]) {
-            context += `Contexto de la página: ${JSON.stringify(data[domain][url])}\n`;
-            console.log("Context added for URL:", data[domain][url]);
+        if (data[url]) {
+          const elements = data[url].elementos;
+          if (data[url].estrategia == "filtrar") {
+            const filteredElements = filterElements(elements, prompt, 5);
+            console.log("Elementos filtrados:", filteredElements);
+            context += `Elementos filtrados:\n`;
+            for (const element of filteredElements) {
+              for (const [key, value] of Object.entries(element)) {
+                if (key !== "prioridad") {
+                  if (key === "nombre") context += `\n`;
+                  context += `${key}: ${value}\n`;
+                }
+              }
+            }
+          } else if (data[url].estrategia == "enviar_todo") {
+            for (const element of elements) {
+              for (const [key, value] of Object.entries(element)) {
+                if (key !== "prioridad") {
+                  context += `${key}: ${value}\n`;
+                }
+              }
+            }
           }
+        } else {
+          context += `No se encontró el contexto para la URL: ${url}\n Puedes preguntarle al usuario que ve.`;
         }
-      } else if (this.actualDomain) {
-        const data = await readPrompts('../Database/prompts.json');
-        if (data[this.actualDomain]) {
-          context += `Contexto del dominio: ${JSON.stringify(data[this.actualDomain])}\n`;
-        }
-      }
-  
+      } 
+      console.log("Contexto:", context);
       context += `Nuevo mensaje del Usuario: ${prompt}`;
       const result = await model.generateContent(context);
       const response = result.response;

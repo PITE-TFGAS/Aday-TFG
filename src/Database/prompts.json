@@ -1,152 +1,161 @@
 {
-  "www.cajasiete.com": {
-    "Descripción": "Cajasiete es una entidad financiera que ofrece servicios bancarios a particulares, empresas y sector agrícola. Su web permite acceder a la banca online, conocer productos financieros y contactar con soporte.",
-    "www.cajasiete.com": {
-      "elementos": [
-        {
-          "nombre": "Menú Principal",
-          "tipo": "menú de navegación",
-          "descripcion": "Ubicado en la parte superior de la página, ofrece enlaces a diferentes secciones como Particulares, Empresas, Agro y Banca Privada.",
-          "ubicacion": "parte superior",
-          "keywords": ["navegación", "categorías", "secciones", "particulares", "empresas", "agro", "banca privada"],
-          "prioridad": 1
-        },
-        {
-          "nombre": "Acceso Cliente",
-          "tipo": "botón",
-          "descripcion": "Permite a los usuarios acceder a su banca online introduciendo sus credenciales.",
-          "ubicacion": "esquina superior derecha",
-          "apariencia": "Fondo verde claro sobre letra blanca y con un candado",
-          "keywords": ["entrar", "login", "acceso", "usuario", "clave", "contraseña", "banca online"],
-          "prioridad": 2
-        },
-        {
-          "nombre": "Hazte Cliente",
-          "tipo": "botón",
-          "descripcion": "Dirige a los nuevos usuarios al proceso de registro para convertirse en clientes de Cajasiete.",
-          "ubicacion": "esquina superior derecha, junto a 'Acceso Cliente'",
-          "apariencia": "Fondo verde oscuro sobre letra blanca y con un icono de usuario",
-          "keywords": ["registrar", "crear cuenta", "nuevo usuario", "unirme"],
-          "prioridad": 3
-        },
-        {
-          "nombre": "Cita Previa",
-          "tipo": "botón",
-          "descripcion": "Permite a los usuarios solicitar una cita previa para ser atendidos en una oficina de Cajasiete.",
-          "ubicacion": "parte superior, a la derecha de 'Hazte Cliente'",
-          "apariencia": "Fondo verde oscuro sobre letra blanca",
-          "keywords": ["cita", "previa", "agendar", "oficina", "atención al cliente"],
-          "prioridad": 4
-        },
-        {
-          "nombre": "Buscador",
-          "tipo": "campo de búsqueda",
-          "descripcion": "Permite a los usuarios buscar información específica dentro del sitio web.",
-          "ubicacion": "parte superior derecha, representado por un ícono de lupa",
-          "keywords": ["buscar", "encontrar", "información", "ayuda"],
-          "prioridad": 6
-        },
-        {
-          "nombre": "Oficinas y Cajeros",
-          "tipo": "enlace",
-          "descripcion": "Proporciona información sobre la ubicación de las sucursales y cajeros automáticos de Cajasiete.",
-          "ubicacion": "parte superior, dentro del Menú Principal",
-          "keywords": ["cajero", "sucursal", "oficina", "dónde está", "ubicación"],
-          "prioridad": 7
-        },
-        {
-          "nombre": "Ayuda",
-          "tipo": "enlace",
-          "descripcion": "Dirige a una sección con preguntas frecuentes y opciones de contacto para asistencia.",
-          "ubicacion": "parte superior, dentro del Menú Principal",
-          "apariencia": "Es una lupa",
-          "keywords": ["preguntas frecuentes", "FAQ", "asistencia", "contacto", "soporte"],
-          "prioridad": 5
-        },
-        {
-          "nombre": "Cuentas y Tarjetas",
-          "tipo": "sección",
-          "descripcion": "Ofrece información sobre las diferentes cuentas bancarias y tarjetas disponibles para los clientes.",
-          "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
-          "keywords": ["cuenta", "tarjeta", "banco", "productos financieros", "servicios bancarios"],
-          "prioridad": 8
-        },
-        {
-          "nombre": "Hipotecas",
-          "tipo": "sección",
-          "descripcion": "Proporciona detalles sobre las opciones de hipotecas ofrecidas por Cajasiete.",
-          "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
-          "keywords": ["hipoteca", "préstamo", "compra casa", "financiación vivienda"],
-          "prioridad": 9
-        },
-        {
-          "nombre": "Préstamos",
-          "tipo": "sección",
-          "descripcion": "Información sobre los diferentes tipos de préstamos disponibles para los clientes.",
-          "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
-          "keywords": ["préstamo", "dinero", "financiación", "crédito", "solicitar préstamo"],
-          "prioridad": 10
-        },
-        {
-          "nombre": "Ahorro e Inversión",
-          "tipo": "sección",
-          "descripcion": "Detalles sobre productos de ahorro e inversión ofrecidos por la entidad.",
-          "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
-          "keywords": ["ahorro", "inversión", "fondos", "rentabilidad", "planes ahorro"],
-          "prioridad": 11
-        },
-        {
-          "nombre": "Seguros",
-          "tipo": "sección",
-          "descripcion": "Información sobre los distintos seguros disponibles para los clientes.",
-          "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
-          "keywords": ["seguro", "protección", "vida", "hogar", "automóvil", "salud"],
-          "prioridad": 12
-        }
-      ],
-      "estrategia": "filtrar"
-    },
-    "https://bancadigital.ruralvia.com/CA-FRONT/NBE/web/particulares/#/login": {
-      "elementos": [
-        {
-          "nombre": "DNI/NIE",
-          "tipo": "campo de texto",
-          "descripcion": "Campo donde el usuario debe ingresar su identificación para acceder a la banca online.",
-          "ubicacion": "parte central de la página",
-          "prioridad": 1
-        },
-        {
-          "nombre": "Contraseña",
-          "tipo": "campo de texto",
-          "descripcion": "Campo donde el usuario debe ingresar su clave de acceso.",
-          "ubicacion": "parte central de la página, debajo del campo de usuario",
-          "prioridad": 2
-        },
-        {
-          "nombre": "Acceder",
-          "tipo": "botón",
-          "descripcion": "Permite al usuario iniciar sesión en su cuenta de banca digital.",
-          "ubicacion": "debajo del campo de contraseña",
-          "apariencia": "Verde más claro que el fondo y letras oscuras, se ilumina cuando puedes hacer clic",
-          "prioridad": 3
-        },
-        {
-          "nombre": "He olvidado mi contraseña",
-          "tipo": "enlace",
-          "descripcion": "Redirige a la página de recuperación de contraseña.",
-          "ubicacion": "debajo del campo de texto 'Contraseña'",
-          "prioridad": 4
-        },
-        {
-          "nombre": "Accede con pasaporte",
-          "tipo": "enlace",
-          "descripcion": "Enlace a la sección de inicio de sesión con pasaporte.",
-          "ubicacion": "debajo del campo de texto 'DNI/NIE'",
-          "prioridad": 5
-        }
-      ],
-      "estrategia": "enviar_todo"
-    }
+  "https://www.cajasiete.com/": {
+    "elementos": [
+      {
+        "nombre": "Menú Principal",
+        "tipo": "menú de navegación",
+        "descripcion": "Ubicado en la parte superior de la página, ofrece enlaces a diferentes secciones como Particulares, Empresas, Agro y Banca Privada.",
+        "ubicacion": "parte superior",
+        "keywords": ["navegación", "categorías", "secciones", "particulares", "empresas", "agro", "banca privada"],
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Acceso Cliente",
+        "tipo": "botón",
+        "descripcion": "Permite a los usuarios acceder a su banca online introduciendo sus credenciales.",
+        "ubicacion": "esquina superior derecha",
+        "apariencia": "Fondo verde claro sobre letra blanca y con un candado",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["entrar", "login", "acceso", "usuario", "clave", "contraseña", "banca online"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Hazte Cliente",
+        "tipo": "botón",
+        "descripcion": "Dirige a los nuevos usuarios al proceso de registro para convertirse en clientes de Cajasiete.",
+        "ubicacion": "esquina superior derecha, junto a 'Acceso Cliente'",
+        "apariencia": "Fondo verde oscuro sobre letra blanca y con un icono de usuario",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["registrar", "crear cuenta", "nuevo usuario", "unirme"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Cita Previa",
+        "tipo": "botón",
+        "descripcion": "Permite a los usuarios solicitar una cita previa para ser atendidos en una oficina de Cajasiete.",
+        "ubicacion": "parte superior, a la derecha de 'Hazte Cliente'",
+        "apariencia": "Fondo verde oscuro sobre letra blanca",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["cita", "previa", "agendar", "oficina", "atención al cliente"],
+        "prioridad": 4
+      },
+      {
+        "nombre": "Buscador",
+        "tipo": "campo de búsqueda",
+        "descripcion": "Permite a los usuarios buscar información específica dentro del sitio web.",
+        "ubicacion": "parte superior derecha",
+        "apariencia": "Icono de lupa",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["buscar", "encontrar", "información", "ayuda"],
+        "prioridad": 6
+      },
+      {
+        "nombre": "Oficinas y Cajeros",
+        "tipo": "enlace",
+        "descripcion": "Proporciona información sobre la ubicación de las sucursales y cajeros automáticos de Cajasiete.",
+        "ubicacion": "parte superior, dentro del Menú Principal",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["cajero", "sucursal", "oficina", "dónde está", "ubicación"],
+        "prioridad": 7
+      },
+      {
+        "nombre": "Ayuda",
+        "tipo": "enlace",
+        "descripcion": "Dirige a una sección con preguntas frecuentes y opciones de contacto para asistencia.",
+        "ubicacion": "parte superior, dentro del Menú Principal",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["preguntas frecuentes", "FAQ", "asistencia", "contacto", "soporte"],
+        "prioridad": 5
+      },
+      {
+        "nombre": "Cuentas y Tarjetas",
+        "tipo": "sección",
+        "descripcion": "Ofrece información sobre las diferentes cuentas bancarias y tarjetas disponibles para los clientes.",
+        "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["cuenta", "tarjeta", "banco", "productos financieros", "servicios bancarios"],
+        "prioridad": 8
+      },
+      {
+        "nombre": "Hipotecas",
+        "tipo": "sección",
+        "descripcion": "Proporciona detalles sobre las opciones de hipotecas ofrecidas por Cajasiete.",
+        "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["hipoteca", "préstamo", "compra casa", "financiación vivienda"],
+        "prioridad": 9
+      },
+      {
+        "nombre": "Préstamos",
+        "tipo": "sección",
+        "descripcion": "Información sobre los diferentes tipos de préstamos disponibles para los clientes.",
+        "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["préstamo", "dinero", "financiación", "crédito", "solicitar préstamo"],
+        "prioridad": 10
+      },
+      {
+        "nombre": "Ahorro e Inversión",
+        "tipo": "sección",
+        "descripcion": "Detalles sobre productos de ahorro e inversión ofrecidos por la entidad.",
+        "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["ahorro", "inversión", "fondos", "rentabilidad", "planes ahorro"],
+        "prioridad": 11
+      },
+      {
+        "nombre": "Seguros",
+        "tipo": "sección",
+        "descripcion": "Información sobre los distintos seguros disponibles para los clientes.",
+        "ubicacion": "parte central de la página, bajo la categoría 'Particulares'",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["seguro", "protección", "vida", "hogar", "automóvil", "salud"],
+        "prioridad": 12
+      }
+    ],
+    "estrategia": "filtrar"
   },
-  "vueling": {}
+  "https://bancadigital.ruralvia.com/CA-FRONT/NBE/web/particulares/#/login": {
+    "elementos": [
+      {
+        "nombre": "DNI/NIE",
+        "tipo": "campo de texto",
+        "descripcion": "Campo donde el usuario debe ingresar su identificación para acceder a la banca online.",
+        "ubicacion": "parte central de la página",
+        "prioridad": 1
+      },
+      {
+        "nombre": "Contraseña",
+        "tipo": "campo de texto",
+        "descripcion": "Campo donde el usuario debe ingresar su clave de acceso.",
+        "ubicacion": "parte central de la página, debajo del campo de usuario",
+        "prioridad": 2
+      },
+      {
+        "nombre": "Acceder",
+        "tipo": "botón",
+        "descripcion": "Permite al usuario iniciar sesión en su cuenta de banca digital.",
+        "ubicacion": "debajo del campo de contraseña",
+        "apariencia": "Verde más claro que el fondo y letras oscuras, se ilumina cuando puedes hacer clic",
+        "prioridad": 3
+      },
+      {
+        "nombre": "He olvidado mi contraseña",
+        "tipo": "enlace",
+        "descripcion": "Redirige a la página de recuperación de contraseña.",
+        "ubicacion": "debajo del campo de texto 'Contraseña'",
+        "prioridad": 4
+      },
+      {
+        "nombre": "Accede con pasaporte",
+        "tipo": "enlace",
+        "descripcion": "Enlace a la sección de inicio de sesión con pasaporte.",
+        "ubicacion": "debajo del campo de texto 'DNI/NIE'",
+        "prioridad": 5
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://www.vueling.com/es": ""
 }
