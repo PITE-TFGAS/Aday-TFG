@@ -15,7 +15,7 @@
         "tipo": "botón",
         "descripcion": "Permite a los usuarios acceder a su banca online introduciendo sus credenciales.",
         "ubicacion": "esquina superior derecha",
-        "apariencia": "Fondo verde claro sobre letra blanca y con un candado",
+        "apariencia": "Fondo verde claro sobre con letras color verde oscuro y un candado",
         "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
         "keywords": ["entrar", "login", "acceso", "usuario", "clave", "contraseña", "banca online"],
         "prioridad": 2
