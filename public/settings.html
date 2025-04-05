@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajustes Iniciales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .selected {
+      background-color: #4CAF50; /* Color verde para indicar selección */
+      color: white; /* Texto blanco */
+      border: 2px solid #388E3C; /* Borde más oscuro */
+    }
+  </style>
+</head>
+<body>
+  <h1>Ajustes Iniciales</h1>
+  <form id="settingsForm">
+    <div class="question">
+      <label>¿Usas internet con frecuencia?</label>
+      <div class="buttons">
+        <button type="button" data-question="internet" data-answer="si">Sí</button>
+        <button type="button" data-question="internet" data-answer="no">No</button>
+      </div>
+    </div>
+    <div class="question">
+      <label>¿Prefieres explicaciones detalladas o instrucciones directas?</label>
+      <div class="buttons">
+        <button type="button" data-question="tecnico" data-answer="detalladas">Explicaciones detalladas</button>
+        <button type="button" data-question="tecnico" data-answer="directas">Instrucciones directas</button>
+      </div>
+    </div>
+    <div class="question">
+      <label>¿Prefieres que confirmemos cada paso antes de continuar?</label>
+      <div class="buttons">
+        <button type="button" data-question="confirmar" data-answer="si">Sí</button>
+        <button type="button" data-question="confirmar" data-answer="no">No</button>
+      </div>
+    </div>
+    <div class="question">
+      <label>¿Necesitas ayuda para identificar botones o enlaces?</label>
+      <div class="buttons">
+        <button type="button" data-question="ayuda" data-answer="si">Sí</button>
+        <button type="button" data-question="ayuda" data-answer="no">No</button>
+      </div>
+    </div>
+    <button type="submit">Guardar y Continuar</button>
+  </form>
+  <script src="settings.js"></script>
+</body>
+</html>

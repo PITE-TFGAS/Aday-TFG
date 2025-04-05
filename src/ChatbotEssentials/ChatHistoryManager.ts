@@ -10,6 +10,23 @@
  *
  */
 
+/**
+ * The `ChatHistoryManager` class is responsible for managing the chat history
+ * between a user and a model. It provides methods to add messages, retrieve
+ * formatted chat history, clear the history, and persist the history to local storage.
+ * 
+ * Features:
+ * - Maintains a chat history with a configurable maximum number of messages.
+ * - Automatically removes the oldest message when the history exceeds the limit.
+ * - Formats the chat history for display purposes.
+ * - Persists the chat history to local storage and retrieves it on initialization.
+ * 
+ * Usage:
+ * - Use `addMessage` to add a new message to the chat history.
+ * - Use `getFormattedHistory` to retrieve the chat history as a formatted string.
+ * - Use `clearHistory` to reset the chat history.
+ * - The chat history is automatically saved to and loaded from local storage.
+ */
 class ChatHistoryManager {
   private chatHistory: { role: "Usuario" | "Modelo"; message: string }[];
   private maxMessages: number;

@@ -6,6 +6,7 @@ module.exports = {
         popup: './src/popup.ts',
         background: './src/background.ts',
         content: './src/content.ts',
+        settings: './src/Settings/settings.ts',
     },
     output: {
         filename: '[name].js', // Genera popup.js, background.js y content.js

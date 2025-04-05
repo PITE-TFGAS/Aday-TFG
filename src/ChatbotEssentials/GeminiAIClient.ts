@@ -14,124 +14,160 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistoryManager from "./ChatHistoryManager";
 import { readPrompts, filterElements } from "../Functions";
 
+/**
+ * The `GeminiAIClient` class provides an interface for interacting with the Gemini AI model.
+ * It manages chat history, user settings, and generates context for AI interactions.
+ * This client is designed to assist users with a patient and empathetic conversational style,
+ * tailored for elderly users with customizable settings.
+ */
 class GeminiAIClient {
   private genAI: GoogleGenerativeAI;
   private historyManager: ChatHistoryManager;
   private instructions: string;
+  private userSettings: Record<string, string>;
+
 
   /**
-   * Creates an instance of the GeminiAIClient.
-   * 
+   * Constructs an instance of the GeminiAIClient class.
+   *
    * @param apiKey - The API key used to authenticate with the Google Generative AI service.
-   * @param maxMessages - The maximum number of messages to keep in the chat history. Defaults to 10.
-   * 
-   * @remarks
-   * This constructor initializes the GoogleGenerativeAI and ChatHistoryManager instances.
-   * It also sets the instructions for the AI to assist elderly users in navigating the internet step by step.
-   * The instructions emphasize clarity, patience, and waiting for user confirmation before proceeding.
+   * @param maxMessages - The maximum number of messages to retain in the chat history. Defaults to 10.
+   * @param userSettings - A record of user-specific settings, where keys are setting names and values are their corresponding values.
    */
-  constructor(apiKey: string, maxMessages: number = 10) {
+  constructor(apiKey: string, maxMessages: number = 10, userSettings: Record<string, string>) {
     this.genAI = new GoogleGenerativeAI(apiKey);
     this.historyManager = new ChatHistoryManager(maxMessages);
-  
-    this.instructions = `Eres 'PITEChat', un asistente paciente y empático para personas mayores. Tu voz es cálida, como un familiar explicando algo por teléfono. Nunca uses jerga técnica (ej: 'DNS', 'cookies'). Si no sabes algo, di: 'Vamos a verlo juntos paso a paso'. Sigue estas reglas:  
-    
-    1. Lenguaje:   
-      - Evita palabras técnicas: en vez de "campo de texto", di "rectángulo blanco donde puedes escribir" o cosas similares.  
-
-    2. Instrucciones:  
-      - Siempre pregunta: '¿Quieres que siga con el siguiente paso?' o '¿Entiendes esto?'. Si el usuario no responde en 2 intentos, ofrece simplificar la explicación.  
-
-    3. Contexto de página:  
-      - Para describir elementos de la página, usa formatos similares o como este:
-          '1. [Nombre]: [Ubicación] + [Apariencia]. Ejemplo:
-          'El botón 'Acceder' está abajo del todo, es verde claro y se ilumina al pasar el ratón.'
-
-    4. Mitigación de errores:
-      - Para que confirmes si lo que has escrito es correcto, piensa antes de enviar la respuesta lo siguiente:
-        - ¿Las instrucciones coinciden con el JSON proporcionado?
-        - ¿Evitaste términos técnicos?
-        - ¿El usuario dio señales de comprensión?"
-
-    5. Ejemplo de conversación (No tiene porque estar relacionado con el contexto):
-      - Usuario: "¿Dónde pongo mi DNI?"
-      - Asistente: "Mira en el centro de la pantalla. Verás un rectángulo blanco con la etiqueta 'DNI/NIE'. Haz clic ahí y escribe tu número."
-      
-      - Usuario: "No veo el botón de acceder"
-      - Asistente: "Está debajo del rectángulo de la contraseña. Es un botón verde claro con letras oscuras. ¿Lo ves ahora?"
-      
-    6. Anotaciones:
-      - No envies en tu mensaje 'Asistente:', el usuario ya ve que eres el asistente.
-      - Cuando quieras escribir un salto de línea, usa \\n.
-      - Solo explica cosas de la página actual, no de otras páginas.
-      - Utiliza el patrón Cognitive Verifier:
-        Si explicas un paso complejo (ej: 'Haz clic en Acceso Cliente'), pregunta:
-        '¿Ves el botón verde claro arriba a la derecha? Si no lo encuentras, dime qué ves en su lugar.'`;
+    this.userSettings = userSettings;
+    this.instructions = this.generateInstructions();
   }
 
+
   /**
-   * Retrieves the generative model from the Gemini AI client.
+   * Generates a set of instructions for the chatbot based on user settings.
+   * The instructions define the chatbot's behavior, tone, and interaction style
+   * tailored to the preferences of elderly users.
    *
-   * @returns {Promise<GenerativeModel>} A promise that resolves to the generative model.
+   * @returns {string} A formatted string containing the chatbot's instructions.
+   *
+   * The generated instructions include:
+   * - Language style: Adjusts the use of technical terms based on user familiarity with the internet.
+   * - Confirmation behavior: Specifies whether the chatbot should confirm each step with the user.
+   * - Element identification: Determines the level of detail in describing UI elements.
+   * - Explanation detail: Configures whether the chatbot provides detailed step-by-step guidance or concise instructions.
+   * - Error mitigation: Ensures the chatbot validates its responses for accuracy and user understanding.
+   * - Example conversations: Provides sample interactions to guide the chatbot's tone and approach.
+   * - Additional annotations: Includes guidelines for formatting and scope of explanations.
+   */
+  private generateInstructions(): string {
+    const helpIdentifying: boolean = this.userSettings.ayuda === 'si';
+    const needsConfirmations: boolean = this.userSettings.confirmar === 'si';
+    const usesInternet: boolean = this.userSettings.internet === 'si';
+    const prefersDetailed: boolean = this.userSettings.tecnico === 'detalladas';
+    console.log("User settings:", this.userSettings);
+    console.log("Help Identifying:", helpIdentifying);
+    console.log("Needs Confirmations:", needsConfirmations);
+    console.log("Uses Internet:", usesInternet);
+    console.log("Prefers Detailed:", prefersDetailed);
+    let counter: number = 0;
+  
+    let instructions: string = 
+      `Eres 'PITEChat', un asistente paciente y empático para personas mayores. Tu voz es cálida, como un familiar explicando algo por teléfono. Sigue estas reglas:\n\n`;
+  
+    if (usesInternet) {
+      counter++;
+      instructions += `${counter}. Lenguaje:\n`;
+      instructions += `   - El usuario suele utilizar internet, puedes hacer uso de palabras más técnicas como "campo de texto", "click", etc.\n\n`;
+    } else {
+      counter++;
+      instructions += `${counter}. Lenguaje:\n`;
+      instructions += `   - Evita palabras técnicas: en vez de "campo de texto", di "rectángulo blanco donde puedes escribir" o cosas similares.\n\n`;
+    }
+    
+    if (needsConfirmations) {
+      counter++;
+      instructions += `${counter}. Confirmaciones:\n`;
+      instructions += `   - Siempre pregunta: '¿Quieres que siga con el siguiente paso?' o '¿Entiendes esto?'. Si el usuario no responde en 2 intentos, ofrece simplificar la explicación.\n\n`;
+    } else {
+      counter++;
+      instructions += `${counter}. Confirmaciones:\n`;
+      instructions += `   - No es necesario confirmar cada paso. Solo pregunta si el usuario parece confundido.\n\n`;
+    } 
+  
+    if (helpIdentifying) {
+      counter++;
+      instructions += `${counter}. Ayuda para identificar elementos:\n`;
+      instructions += `   - Para describir elementos de la página, usa formatos similares o como este:\n`;
+      instructions += `     'El botón 'Acceder' está abajo del todo, es verde claro y se ilumina al pasar el ratón.'\n\n`;
+    } else {
+      counter++;
+      instructions += `${counter}. Ayuda para identificar elementos:\n`;
+      instructions += `   - No es necesario ayudar a identificar elementos visualmente a no ser que el usuario no lo encuentre. Simplemente refierete a ellos por su nombre.\n\n`;
+    }
+
+    if (prefersDetailed) {
+      counter++;
+      instructions += `${counter}. Explicaciones detalladas:\n`;
+      instructions += `   - Proporciona explicaciones paso a paso, asegurándote de que el usuario entienda cada parte antes de continuar.\n\n`;
+      instructions += `   - Utiliza el patrón Cognitive Verifier:\n`;
+      instructions += `     - Si explicas un paso complejo (ej: 'Haz clic en Acceso Cliente'), pregunta:\n`;
+      instructions += `       '¿Ves el botón ${helpIdentifying ? 'verde claro arriba a la derecha' : 'que pone Acceso Cliente'}? Si no lo encuentras, dime qué ves en su lugar.'\n`;
+    } else {
+      counter++;
+      instructions += `${counter}. Instrucciones directas:\n`;
+      instructions += `   - Ve al grano y proporciona instrucciones claras y concisas: Haz click en 'X' o interacciones similares.\n\n`;
+    }
+
+    counter++;
+    instructions += `${counter}. Mitigación de errores:\n`;
+    instructions += `   - Antes de enviar la respuesta, confirma si lo que has escrito es correcto:\n`;
+    instructions += `     - ¿Las instrucciones coinciden con el JSON proporcionado?\n`;
+    instructions += `     - ¿Evitaste términos técnicos?\n`;
+    instructions += `     - ¿El usuario dio señales de comprensión?\n\n`;
+  
+    counter++;
+    instructions += `${counter}. Ejemplo de conversación:\n`;
+    instructions += `   - Usuario: "¿Dónde pongo mi DNI?"\n`;
+    instructions += `     Asistente: "Mira en el centro de la pantalla. Verás un rectángulo blanco con la etiqueta 'DNI/NIE'. Haz clic ahí y escribe tu número."\n\n`;
+    instructions += `   - Usuario: "No veo el botón de acceder"\n`;
+    instructions += `     Asistente: "Está debajo del rectángulo de la contraseña. Es un botón verde claro con letras oscuras. ¿Lo ves ahora?"\n\n`;
+  
+    counter++;
+    instructions += `${counter}. Anotaciones:\n`;
+    instructions += `   - No envíes en tu mensaje 'Asistente:', el usuario ya ve que eres el asistente.\n`;
+    instructions += `   - Cuando quieras escribir un salto de línea, usa '\\n'`;
+    instructions += `   - Solo explica cosas de la página actual, no de otras páginas.\n`;
+  
+    return instructions;
+  }
+
+
+  /**
+   * Retrieves the generative model configuration for the Gemini AI client.
+   *
+   * @returns A promise that resolves to the generative model object with the specified configuration.
    */
   private async getModel() {
     return this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   }
 
+
   /**
-   * Sends a message to the Gemini AI model and returns the generated response.
+   * Sends a message to the Gemini AI model and retrieves the generated response.
    *
-   * @param {string} prompt - The user's message to be sent to the model.
-   * @param {string} [url=null] - Optional URL to fetch additional context data from prompts.json.
-   * @returns {Promise<string>} - A promise that resolves to the model's response.
-   * @throws Will throw an error if the model execution fails.
+   * @param prompt - The input prompt or message to send to the AI model.
+   * @param url - An optional URL to provide additional context for the AI model. Defaults to `null`.
+   * @returns A promise that resolves to the generated response as a string.
+   * @throws Will throw an error if there is an issue executing the Gemini model.
    */
   public async sendMessage(prompt: string, url: string = null): Promise<string> {
     try {
       const model = await this.getModel();
-      let context = `Instrucciones Iniciales: ${this.instructions}\n`;
-      context += `Historial del chat: ${this.historyManager.getFormattedHistory()}\n`;
-      const data = await readPrompts('../Database/prompts.json');
-      if (url) {
-        if (data[url]) {
-          const elements = data[url].elementos;
-          if (data[url].estrategia == "filtrar") {
-            const filteredElements = filterElements(elements, prompt, 5);
-            console.log("Elementos filtrados:", filteredElements);
-            context += `Elementos filtrados:\n`;
-            for (const element of filteredElements) {
-              for (const [key, value] of Object.entries(element)) {
-                if (key !== "prioridad") {
-                  if (key === "nombre") context += `\n`;
-                  context += `${key}: ${value}\n`;
-                }
-              }
-            }
-          } else if (data[url].estrategia == "enviar_todo") {
-            for (const element of elements) {
-              for (const [key, value] of Object.entries(element)) {
-                if (key !== "prioridad") {
-                  context += `${key}: ${value}\n`;
-                }
-              }
-            }
-          }
-        } else {
-          context += `No se encontró el contexto para la URL: ${url}\n Puedes preguntarle al usuario que ve.`;
-        }
-      } 
-      console.log("Contexto:", context);
-      context += `Nuevo mensaje del Usuario: ${prompt}`;
+      const context = await this.buildContext(prompt, url);
       const result = await model.generateContent(context);
-      const response = result.response;
-      const text = response.text();
-  
-      this.historyManager.addMessage("Usuario", prompt);
-      this.historyManager.addMessage("Modelo", text);
-  
-      this.historyManager.saveHistoryToLocalStorage();
-  
-      return text;
+      const response = result.response.text();
+
+      this.updateChatHistory(prompt, response);
+      return response;
     } catch (error) {
       console.error("Error al ejecutar el modelo Gemini:", error);
       throw error;
@@ -139,17 +175,116 @@ class GeminiAIClient {
   }
 
   /**
+   * Builds the context string to be sent to the AI model by combining various components
+   * such as initial instructions, chat history, user goal, and optionally additional
+   * context from a URL.
+   *
+   * @param prompt - The new message from the user to be included in the context.
+   * @param url - An optional URL to fetch additional context data. If null, no additional
+   *              context from a URL will be included.
+   * @returns A promise that resolves to the complete context string to be sent to the model.
+   *
+   * @remarks
+   * - The method retrieves the user's goal from Chrome's local storage.
+   * - If a URL is provided, it reads prompts from a JSON file and appends relevant context.
+   * - Logs the final context string to the console for debugging purposes.
+   */
+  private async buildContext(prompt: string, url: string | null): Promise<string> {
+    let context = `Instrucciones Iniciales: ${this.instructions}\n`;
+    context += `Historial del chat: ${this.historyManager.getFormattedHistory()}\n`;
+
+    const userGoal = await new Promise<string>((resolve) => {
+      chrome.storage.local.get("userGoal", (result) => {
+        resolve(result.userGoal || "No definido");
+      });
+    });
+
+    context += `Objetivo del usuario: ${userGoal}\n`;
+
+    if (url) {
+      const data = await readPrompts('../Database/prompts.json');
+      context += this.addContextFromUrl(data, url, prompt);
+    }
+
+    context += `Nuevo mensaje del Usuario: ${prompt}`;
+    console.log("Contexto enviado al modelo:", context);
+    return context;
+  }
+
+  /**
+   * Adds context from a given URL based on the provided data and strategy.
+   *
+   * @param data - An object containing context data mapped by URLs. Each URL entry
+   *               includes an array of elements and a strategy for processing them.
+   * @param url - The URL whose context needs to be added.
+   * @param prompt - A string used to filter elements when the strategy is "filtrar".
+   * @returns A formatted string containing the context based on the strategy:
+   *          - If the URL is not found in the data, returns a message indicating
+   *            the context is missing and suggests asking the user.
+   *          - If the strategy is "filtrar", returns a formatted string of filtered elements.
+   *          - If the strategy is "enviar_todo", returns a formatted string of all elements.
+   *          - Returns an empty string if no valid strategy is found.
+   */
+  private addContextFromUrl(data: any, url: string, prompt: string): string {
+    if (!data[url]) {
+      return `No se encontró el contexto para la URL: ${url}\nPuedes preguntarle al usuario qué ve.\n`;
+    }
+
+    const elements = data[url].elementos;
+    if (data[url].estrategia === "filtrar") {
+      const filteredElements = filterElements(elements, prompt, 5);
+      return this.formatElements(filteredElements, "Elementos filtrados");
+    } else if (data[url].estrategia === "enviar_todo") {
+      return this.formatElements(elements, "Todos los elementos");
+    }
+
+    return "";
+  }
+
+  /**
+   * Formats an array of elements into a string representation with a given title.
+   * Each element's properties are listed, excluding the property named "prioridad".
+   *
+   * @param elements - An array of objects to be formatted.
+   * @param title - A title to prepend to the formatted string.
+   * @returns A formatted string containing the title and the properties of each element.
+   */
+  private formatElements(elements: any[], title: string): string {
+    let formatted = `${title}:\n`;
+    for (const element of elements) {
+      for (const [key, value] of Object.entries(element)) {
+        if (key !== "prioridad") {
+          formatted += `${key}: ${value}\n`;
+        }
+      }
+    }
+    return formatted;
+  }
+
+  /**
+   * Updates the chat history by adding the user's message and the AI's response.
+   * The updated history is then saved to local storage.
+   *
+   * @param userMessage - The message sent by the user.
+   * @param aiResponse - The response generated by the AI model.
+   */
+  private updateChatHistory(userMessage: string, aiResponse: string): void {
+    this.historyManager.addMessage("Usuario", userMessage);
+    this.historyManager.addMessage("Modelo", aiResponse);
+    this.historyManager.saveHistoryToLocalStorage();
+  }
+
+  /**
    * Clears the chat history by invoking the `clearHistory` method
-   * of the `historyManager` instance.
-   * 
-   * @returns {void}
+   * of the `historyManager` instance. This method is typically used
+   * to reset or remove all stored conversation data.
    */
   public clearChatHistory(): void {
     this.historyManager.clearHistory();
   }
 
   /**
-   * Retrieves the formatted chat history.
+   * Retrieves the chat history in a formatted string representation.
    *
    * @returns {string} The formatted chat history.
    */
