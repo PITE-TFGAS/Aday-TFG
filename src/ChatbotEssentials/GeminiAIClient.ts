@@ -97,7 +97,7 @@ class GeminiAIClient {
       counter++;
       instructions += `${counter}. Ayuda para identificar elementos:\n`;
       instructions += `   - Para describir elementos de la página, usa formatos similares o como este:\n`;
-      instructions += `     'El botón 'Acceder' está abajo del todo, es verde claro y se ilumina al pasar el ratón.'\n\n`;
+      instructions += `     'El botón está abajo del todo, es verde claro y se ilumina al pasar el ratón.'\n`;
     } else {
       counter++;
       instructions += `${counter}. Ayuda para identificar elementos:\n`;
@@ -109,8 +109,8 @@ class GeminiAIClient {
       instructions += `${counter}. Explicaciones detalladas:\n`;
       instructions += `   - Proporciona explicaciones paso a paso, asegurándote de que el usuario entienda cada parte antes de continuar.\n\n`;
       instructions += `   - Utiliza el patrón Cognitive Verifier:\n`;
-      instructions += `     - Si explicas un paso complejo (ej: 'Haz clic en Acceso Cliente'), pregunta:\n`;
-      instructions += `       '¿Ves el botón ${helpIdentifying ? 'verde claro arriba a la derecha' : 'que pone Acceso Cliente'}? Si no lo encuentras, dime qué ves en su lugar.'\n`;
+      instructions += `     - Si explicas un paso complejo (ej: 'Haz clic en X'), pregunta:\n`;
+      instructions += `       '¿Ves el botón ${helpIdentifying ? 'verde claro arriba a la derecha' : 'que pone X'}? Si no lo encuentras, dime qué ves en su lugar.'\n`;
     } else {
       counter++;
       instructions += `${counter}. Instrucciones directas:\n`;
@@ -120,23 +120,25 @@ class GeminiAIClient {
     counter++;
     instructions += `${counter}. Mitigación de errores:\n`;
     instructions += `   - Antes de enviar la respuesta, confirma si lo que has escrito es correcto:\n`;
+    instructions += `     - ¿Estoy ayudando al usuario con el "objetivo del usuario"?\n`;
     instructions += `     - ¿Las instrucciones coinciden con el JSON proporcionado?\n`;
-    instructions += `     - ¿Evitaste términos técnicos?\n`;
-    instructions += `     - ¿El usuario dio señales de comprensión?\n\n`;
+    instructions += `     - ¿He tenido en cuenta las anotaciones proporcionadas?\n`;
+    if (!usesInternet) instructions += `     - ¿Evitaste términos técnicos?\n`;
   
     counter++;
     instructions += `${counter}. Ejemplo de conversación:\n`;
-    instructions += `   - Usuario: "¿Dónde pongo mi DNI?"\n`;
-    instructions += `     Asistente: "Mira en el centro de la pantalla. Verás un rectángulo blanco con la etiqueta 'DNI/NIE'. Haz clic ahí y escribe tu número."\n\n`;
-    instructions += `   - Usuario: "No veo el botón de acceder"\n`;
-    instructions += `     Asistente: "Está debajo del rectángulo de la contraseña. Es un botón verde claro con letras oscuras. ¿Lo ves ahora?"\n\n`;
+    instructions += `   - Usuario: "¿Dónde pongo mi nombre?"\n`;
+    instructions += `     Asistente: "Mira en el centro de la pantalla. Verás un rectángulo blanco con la etiqueta 'Nombre de usuario'. Haz clic ahí y escribe tu nombre de usuario."\n\n`;
+    instructions += `   - Usuario: "No veo el botón X"\n`;
+    instructions += `     Asistente: "Está debajo del rectángulo de Y. Es un botón violeta con letras oscuras. ¿Lo ves ahora?"\n\n`;
   
     counter++;
     instructions += `${counter}. Anotaciones:\n`;
     instructions += `   - No envíes en tu mensaje 'Asistente:', el usuario ya ve que eres el asistente.\n`;
-    instructions += `   - Cuando quieras escribir un salto de línea, usa '\\n'`;
-    instructions += `   - Solo explica cosas de la página actual, no de otras páginas.\n`;
-  
+    instructions += `   - Haz referencia solo a los elementos que se te pasan, no supongas que habrán elementos en pasos posteriores porque puede no ser así.\n`;
+    instructions += `   - Esto último que te he dicho es muy importante. Solo explica cosas de la página actual, no de páginas posteriores o diferentes.\n`;
+    instructions += `   - No le envíes al usuario el razonamiento que has llevado a cabo en la mitigación de errores.\n`;
+
     return instructions;
   }
 
@@ -254,6 +256,7 @@ class GeminiAIClient {
     for (const element of elements) {
       for (const [key, value] of Object.entries(element)) {
         if (key !== "prioridad") {
+          if (key === "nombre") formatted += `\n`;
           formatted += `${key}: ${value}\n`;
         }
       }

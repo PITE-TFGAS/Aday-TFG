@@ -137,14 +137,15 @@
         "tipo": "botón",
         "descripcion": "Permite al usuario iniciar sesión en su cuenta de banca digital.",
         "ubicacion": "debajo del campo de contraseña",
-        "apariencia": "Verde más claro que el fondo y letras oscuras, se ilumina cuando puedes hacer clic",
+        "apariencia": "Verde más claro que el fondo y letras oscuras, obtiene su color cuando has introducido el DNI/NIE y la contraseña",
         "prioridad": 3
       },
       {
         "nombre": "He olvidado mi contraseña",
         "tipo": "enlace",
-        "descripcion": "Redirige a la página de recuperación de contraseña.",
+        "descripcion": "Redirige a la página de recuperación de contraseña, ahí puedes cambiar la contraseña.",
         "ubicacion": "debajo del campo de texto 'Contraseña'",
+        "apariencia": "Texto blanco",
         "prioridad": 4
       },
       {
@@ -152,6 +153,7 @@
         "tipo": "enlace",
         "descripcion": "Enlace a la sección de inicio de sesión con pasaporte.",
         "ubicacion": "debajo del campo de texto 'DNI/NIE'",
+        "apariencia": "Texto blanco",
         "prioridad": 5
       }
     ],
