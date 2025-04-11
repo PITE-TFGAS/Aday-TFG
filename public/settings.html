@@ -3,67 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajustes Iniciales</title>
+  <title>Ajustes del Chat</title>
   <style>
+    :root {
+      --primary-color: #2E7D32; /* Verde principal */
+      --secondary-color: #1565C0; /* Azul */
+      --danger-color: #C62828; /* Rojo */
+      --text-color: #333;
+      --light-bg: #f5f5f5;
+      --white: #ffffff;
+      --shadow: 0 4px 8px rgba(0,0,0,0.1);
+      --border-radius: 8px;
+    }
+    
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+      font-family: 'Arial', sans-serif;
+      width: 500px;
+      height: 600px; /* Altura fija */
+      margin: 0;
+      padding: 15px;
+      font-size: 18px; /* Reducido ligeramente */
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.4; /* Más compacto */
+      box-sizing: border-box;
+      overflow: hidden; /* Elimina el scroll */
+      display: flex;
+      flex-direction: column;
     }
+    
+    h1 {
+      font-size: 22px; /* Un poco más pequeño */
+      color: var(--primary-color);
+      text-align: center;
+      margin: 0 0 5px 0;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    
+    #settingsForm {
+      display: flex;
+      flex-direction: column;
+      gap: 12px; /* Espacio reducido */
+      flex-grow: 1;
+      overflow-y: auto; /* Scroll interno solo si es necesario */
+    }
+    
     .question {
-      margin-bottom: 20px;
+      background-color: var(--white);
+      padding: 12px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
     }
+    
     .question label {
       display: block;
-      margin-bottom: 5px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 17px; /* Reducido ligeramente */
     }
+    
     .buttons {
-      display: flex;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px; /* Espacio reducido */
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
+    
+    .option-button {
+      padding: 10px 5px; /* Más compacto */
+      font-size: 16px; /* Reducido ligeramente */
+      border: 2px solid #ddd;
+      border-radius: var(--border-radius);
       cursor: pointer;
+      background-color: var(--white);
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      word-break: break-word;
+      min-height: 44px; /* Altura táctil mínima */
     }
-    .selected {
-      background-color: #4CAF50; /* Color verde para indicar selección */
-      color: white; /* Texto blanco */
-      border: 2px solid #388E3C; /* Borde más oscuro */
+    
+    .option-button:hover {
+      background-color: #E3F2FD;
+    }
+    
+    .option-button.selected {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    #saveButton {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      margin-top: 5px;
+      box-shadow: var(--shadow);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    
+    /* Mejoras de accesibilidad */
+    button:focus {
+      outline: 3px solid #FFD600;
+    }
+    
+    #saveButton::before {
+      content: "✓";
+      margin-right: 8px;
     }
   </style>
 </head>
 <body>
-  <h1>Ajustes Iniciales</h1>
+  <h1>Ajustes del Chat</h1>
   <form id="settingsForm">
     <div class="question">
       <label>¿Usas internet con frecuencia?</label>
       <div class="buttons">
-        <button type="button" data-question="internet" data-answer="si">Sí</button>
-        <button type="button" data-question="internet" data-answer="no">No</button>
+        <button type="button" class="option-button" data-question="internet" data-answer="si">Sí</button>
+        <button type="button" class="option-button" data-question="internet" data-answer="no">No</button>
       </div>
     </div>
+    
     <div class="question">
       <label>¿Prefieres explicaciones detalladas o instrucciones directas?</label>
       <div class="buttons">
-        <button type="button" data-question="tecnico" data-answer="detalladas">Explicaciones detalladas</button>
-        <button type="button" data-question="tecnico" data-answer="directas">Instrucciones directas</button>
+        <button type="button" class="option-button" data-question="tecnico" data-answer="detalladas">Detalladas</button>
+        <button type="button" class="option-button" data-question="tecnico" data-answer="directas">Directas</button>
       </div>
     </div>
+    
     <div class="question">
-      <label>¿Prefieres que confirmemos cada paso antes de continuar?</label>
+      <label>¿Prefieres confirmación en cada paso?</label>
       <div class="buttons">
-        <button type="button" data-question="confirmar" data-answer="si">Sí</button>
-        <button type="button" data-question="confirmar" data-answer="no">No</button>
+        <button type="button" class="option-button" data-question="confirmar" data-answer="si">Sí</button>
+        <button type="button" class="option-button" data-question="confirmar" data-answer="no">No</button>
       </div>
     </div>
+    
     <div class="question">
-      <label>¿Necesitas ayuda para identificar botones o enlaces?</label>
+      <label>¿Necesitas ayuda con botones/enlaces?</label>
       <div class="buttons">
-        <button type="button" data-question="ayuda" data-answer="si">Sí</button>
-        <button type="button" data-question="ayuda" data-answer="no">No</button>
+        <button type="button" class="option-button" data-question="ayuda" data-answer="si">Sí</button>
+        <button type="button" class="option-button" data-question="ayuda" data-answer="no">No</button>
       </div>
     </div>
-    <button type="submit">Guardar y Continuar</button>
+    
+    <button type="submit" id="saveButton">Guardar Configuración</button>
   </form>
   <script src="settings.js"></script>
 </body>

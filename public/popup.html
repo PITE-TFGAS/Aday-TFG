@@ -3,83 +3,232 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot</title>
+  <title>Chatbot Amigable</title>
   <style>
+    :root {
+      --primary-color: #2E7D32; /* Verde más suave */
+      --secondary-color: #1565C0; /* Azul claro */
+      --danger-color: #C62828; /* Rojo suave */
+      --text-color: #333;
+      --light-bg: #f5f5f5;
+      --white: #ffffff;
+      --shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
     body {
-      font-family: Arial, sans-serif;
-      width: 350px; /* Ancho para mejor legibilidad */
+      font-family: 'Arial', sans-serif;
+      width: 500px;
+      height: 600px;
       margin: 0;
-      padding: 10px;
-      font-size: 18px; /* Texto más grande */
-      background-color: #f9f9f9; /* Fondo claro para reducir el cansancio visual */
+      padding: 15px;
+      font-size: 20px;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      overflow: hidden;
     }
+    
+    h1 {
+      font-size: 22px;
+      color: var(--primary-color);
+      text-align: center;
+      margin: 0 0 3px 0;
+      padding: 0;
+    }
+    
+    #goalContainer {
+      background-color: var(--white);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+    
+    #goalContainer label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+    
+    #userGoal {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      box-sizing: border-box;
+    }
+    
     #chatbox {
-      height: 300px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
+      flex-grow: 1;
+      border: 2px solid #ddd;
+      padding: 12px;
       margin-bottom: 10px;
-      background-color: white; /* Fondo blanco para el área de chat */
-      font-size: 16px; /* Tamaño de fuente adecuado para la lectura */
+      background-color: var(--white);
+      border-radius: 8px;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+      overflow-y: auto;
+      min-height: 245px;
     }
-    #userInput {
-      width: calc(100% - 70px); /* Ajuste para el botón más grande */
-      padding: 10px;
-      font-size: 16px; /* Texto más grande en el input */
-      border: 2px solid #ccc; /* Borde más grueso para mejor visibilidad */
-      border-radius: 5px; /* Bordes redondeados */
+    
+    .message {
+      margin-bottom: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      max-width: 80%;
+      word-wrap: break-word;
     }
+    
+    .user-message {
+      background-color: #E3F2FD;
+      margin-left: auto;
+      border-top-right-radius: 0;
+    }
+    
+    .bot-message {
+      background-color: #E8F5E9;
+      margin-right: auto;
+      border-top-left-radius: 0;
+    }
+    
+    .sender {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .input-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+    
+    .button-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    
     button {
-      width: 60px; /* Botón más grande */
-      padding: 10px;
-      font-size: 16px; /* Texto más grande en el botón */
-      background-color: #4CAF50; /* Color verde para mejor visibilidad */
-      color: white;
+      padding: 10px 8px; /* Ajuste horizontal reducido */
+      font-size: 18px;
       border: none;
-      border-radius: 5px; /* Bordes redondeados */
-      cursor: pointer; /* Cursor de mano para indicar que es clickeable */
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow);
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap; /* Evita salto de línea */
+      overflow: hidden; /* Oculta texto que sobresale */
+      text-overflow: ellipsis; /* Añade puntos si el texto es muy largo */
     }
-    button:hover {
-      background-color: #45a049; /* Cambio de color al pasar el mouse */
+    
+    button:active {
+      transform: scale(0.98);
     }
+    
+    #sendButton {
+      background-color: var(--primary-color);
+      color: white;
+      width: 90px; /* Ancho ligeramente mayor */
+      flex-shrink: 0;
+    }
+    
     #resetButton {
-      width: 100%; /* Ancho completo */
-      margin-top: 10px; /* Espacio superior */
-      background-color: #f44336; /* Color rojo para indicar acción de limpiar */
+      background-color: var(--danger-color);
+      color: white;
     }
-    #resetButton:hover {
-      background-color: #d32f2f; /* Cambio de color al pasar el mouse */
-    }
+    
     #settingsButton {
-      width: 100%; /* Ancho completo */
-      margin-top: 10px; /* Espacio superior */
-      background-color: #2196F3; /* Color azul para el botón de ajustes */
+      background-color: var(--secondary-color);
+      color: white;
     }
-    #settingsButton:hover {
-      background-color: #1976D2; /* Cambio de color al pasar el mouse */
+    
+    #resolveGoalButton {
+      background-color: var(--primary-color);
+      color: white;
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+    }
+    
+    #userInput {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    
+    /* Mejoras de accesibilidad */
+    button:focus, input:focus {
+      outline: 3px solid #FFD600;
+    }
+    
+    /* Iconos para mayor claridad */
+    button::before {
+      margin-right: 5px; /* Reducido ligeramente */
+      font-family: 'Arial';
+    }
+    
+    #sendButton::before {
+      content: "➤";
+    }
+    
+    #resetButton::before {
+      content: "↻";
+    }
+    
+    #settingsButton::before {
+      content: "⚙";
+    }
+    
+    #resolveGoalButton::before {
+      content: "✓";
     }
   </style>
 </head>
 <body>
-  <div id="goalContainer" style="margin-bottom: 10px;">
-    <label for="userGoal" style="font-size: 16px; font-weight: bold;">Objetivo actual:</label>
-    <input type="text" id="userGoal" placeholder="Escribe tu objetivo aquí..." style="width: 100%; padding: 10px; font-size: 16px; margin-top: 5px;">
-    <button id="resolveGoalButton" style="margin-top: 10px; background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
-      Confirmar que el objetivo ha sido resuelto
+  <h1>PITEChat</h1>
+  
+  <div id="goalContainer">
+    <label for="userGoal">Objetivo actual:</label>
+    <input type="text" id="userGoal" placeholder="Escribe tu objetivo aquí...">
+    <button id="resolveGoalButton">
+      Confirmar objetivo resuelto
     </button>
   </div>
 
   <div id="chatbox"></div>
-  <input type="text" id="userInput" placeholder="Escribe un mensaje...">
-  <button id="sendButton">Enviar</button>
-  <button id="resetButton">Reiniciar chat</button>
-  <button id="settingsButton">Ajustes</button> <!-- Nuevo botón -->
+  
+  <div class="input-container">
+    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
+    <button id="sendButton">Enviar</button>
+  </div>
+  
+  <div class="button-container">
+    <button id="resetButton">Reiniciar</button>
+    <button id="settingsButton">Ajustes</button>
+  </div>
 
   <template id="message-template">
     <div class="message">
       <strong class="sender"></strong>: <span class="content"></span>
     </div>
   </template>
+  
   <script src="popup.js"></script>
 </body>
 </html>
