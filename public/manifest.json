@@ -7,7 +7,11 @@
     "activeTab",
     "scripting",
     "storage",
-    "tabs"
+    "tabs",
+    "tts"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"
@@ -18,8 +22,13 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "resources": ["settings.html"]
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.js"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

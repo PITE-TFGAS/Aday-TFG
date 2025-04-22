@@ -19,7 +19,7 @@
   },
   "include": [
         "src/**/*"
-  ],
+, "public/microphonePermission.ts"  ],
   "exclude": [
         "node_modules",
         "build",

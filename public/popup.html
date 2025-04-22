@@ -17,7 +17,7 @@
     
     body {
       font-family: 'Arial', sans-serif;
-      width: 500px;
+      width: 700px;
       height: 600px;
       margin: 0;
       padding: 15px;
@@ -75,14 +75,14 @@
       font-size: 18px;
       box-shadow: var(--shadow);
       overflow-y: auto;
-      min-height: 245px;
+      min-height: 200px;
     }
     
     .message {
       margin-bottom: 12px;
       padding: 8px;
       border-radius: 6px;
-      max-width: 80%;
+      max-width: 90%;
       word-wrap: break-word;
     }
     
@@ -111,15 +111,31 @@
     }
     
     .button-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 8px;
       flex-shrink: 0;
     }
     
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    #ttsButton {
+      background-color: #6A1B9A; /* Morado para TTS */
+      color: white;
+    }
+
+    /* Añadir iconos a los nuevos botones */
+    #ttsButton::before {
+      content: "🔊";
+    }
+
     button {
-      padding: 10px 8px; /* Ajuste horizontal reducido */
-      font-size: 18px;
+      padding: 10px 5px; /* Ajuste horizontal reducido */
+      font-size: 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -198,6 +214,30 @@
     #resolveGoalButton::before {
       content: "✓";
     }
+
+    #ttsButton.active-feature::before {
+      content: "🔊";
+    }
+    #ttsButton:not(.active-feature)::before {
+      content: "🔈";
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .active-feature {
+      animation: pulse 2s infinite;
+      box-shadow: 0 0 0 2px var(--white), 0 0 0 4px currentColor;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -219,8 +259,11 @@
   </div>
   
   <div class="button-container">
-    <button id="resetButton">Reiniciar</button>
-    <button id="settingsButton">Ajustes</button>
+    <button id="ttsButton">Leer en voz alta</button>
+    <div class="button-row">
+      <button id="resetButton">Reiniciar</button>
+      <button id="settingsButton">Ajustes</button>
+    </div>
   </div>
 
   <template id="message-template">

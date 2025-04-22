@@ -54,7 +54,6 @@ function setupChatbot() {
 
     chrome.storage.local.get("userSettings", (result) => {
       const API_KEY: string = "AIzaSyCGnpOkebWUd1hLjc-ToU1FFS66veG3yMU";
-
       const userSettings = result.userSettings || defaultSettings;
 
       chatbot = new Chatbot(API_KEY, userSettings);
@@ -63,6 +62,7 @@ function setupChatbot() {
         console.warn("No se encontraron ajustes. Redirigiendo a la página de configuración...");
         window.location.href = "settings.html";
       }
+
     });
 
     const userGoalInput = document.getElementById("userGoal") as HTMLInputElement;
@@ -72,18 +72,14 @@ function setupChatbot() {
       userGoalInput.value = result.userGoal || "";
     });
 
-
     userGoalInput.addEventListener("input", () => {
       const userGoal = userGoalInput.value.trim();
       chrome.storage.local.set({ userGoal });
     });
 
-
     resolveGoalButton.addEventListener("click", () => {
       chrome.storage.local.set({ userGoal: "" }, () => {
         userGoalInput.value = "";
-
-
         if (chatbot) {
           chatbot.handleGoalResolved();
         } else {

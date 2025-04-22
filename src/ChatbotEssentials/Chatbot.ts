@@ -33,6 +33,9 @@ class Chatbot {
   private userInput: HTMLInputElement;
   private sendButton: HTMLButtonElement;
   private resetButton: HTMLButtonElement;
+  private ttsButton: HTMLButtonElement;
+  private sttButton: HTMLButtonElement;
+  private ttsEnabled: boolean = false;
 
   /**
    * Initializes the Chatbot instance with the provided API key and user settings.
@@ -46,8 +49,8 @@ class Chatbot {
    */
   constructor(apiKey: string, userSettings: Record<string, string>) {
     this.API_KEY = apiKey;
-    this.userSettings = userSettings; // Guardar ajustes del usuario
-    this.AI_CLIENT = new GeminiAIClient(this.API_KEY, 10, this.userSettings); // Inicializar cliente de IA
+    this.userSettings = userSettings;
+    this.AI_CLIENT = new GeminiAIClient(this.API_KEY, 10, this.userSettings);
 
     this.initializeDOMElements();
     this.loadMessages();
@@ -66,10 +69,58 @@ class Chatbot {
     this.userInput = document.getElementById("userInput") as HTMLInputElement;
     this.sendButton = document.getElementById("sendButton") as HTMLButtonElement;
     this.resetButton = document.getElementById("resetButton") as HTMLButtonElement;
+    this.ttsButton = document.getElementById("ttsButton") as HTMLButtonElement;
 
-    if (!this.chatbox || !this.userInput || !this.sendButton || !this.resetButton) {
+
+    if (!this.chatbox || !this.userInput || !this.sendButton || !this.resetButton || !this.sttButton || !this.ttsButton) {
       console.error("Error: No se encontraron los elementos necesarios en el DOM.");
       return;
+    }
+  }
+
+  /**
+   * Handles TTS button click to read the last bot message aloud
+   */
+  private handleTTS(): void {
+    this.ttsEnabled = !this.ttsEnabled;
+    this.ttsButton.classList.toggle('active-feature');
+
+    if (this.ttsEnabled) {
+      const botMessages = this.chatbox.querySelectorAll('.bot-message');
+      if (botMessages.length > 0) {
+        const lastBotMessage = botMessages[botMessages.length - 1];
+        const text = lastBotMessage.querySelector('.content')?.textContent || '';
+        this.speak(text);
+      }
+    }
+  }
+
+  /**
+   * Uses the browser's speech synthesis to read text aloud
+   * @param text - The text to be read
+   */
+  private speak(text: string): void {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.9; // Velocidad ligeramente reducida para mayor claridad
+      utterance.pitch = 1.2; // Tono un poco más alto para mejor audibilidad
+      
+      // Configuración de voz preferida para español
+      const voices = speechSynthesis.getVoices();
+      const spanishVoice = voices.find(voice => 
+        voice.lang.includes('es') && voice.name.includes('Natural')
+      );
+      
+      if (spanishVoice) {
+        utterance.voice = spanishVoice;
+      }
+
+      speechSynthesis.speak(utterance);
+    } else {
+      console.warn('La síntesis de voz no está soportada en este navegador');
+      this.ttsButton.disabled = true;
+      this.ttsButton.title = "Voz no soportada";
     }
   }
 
@@ -120,6 +171,17 @@ class Chatbot {
       this.resetButton.addEventListener("click", () => this.resetChat(this.chatbox));
     } else {
       console.error("Error: No se encontró el botón de reinicio.");
+    }
+
+    if (this.ttsButton) {
+      this.ttsButton.addEventListener("click", () => this.handleTTS());
+    } else {
+      console.error("Error: No se encontró el botón de TTS.");
+    }
+  
+    if ('speechSynthesis' in window) {
+      speechSynthesis.onvoiceschanged = () => {
+      };
     }
   }
 
@@ -199,7 +261,7 @@ class Chatbot {
    * @param sender - The sender of the message (e.g., "Tú" or "Asistente").
    * @param message - The content of the message to be displayed.
    */
-  private appendMessage(sender: string, message: string): void {
+  public appendMessage(sender: string, message: string): void {
     const template = document.getElementById("message-template") as HTMLTemplateElement;
     if (!template) {
       console.error("Error: No se encontró la plantilla del mensaje.");
@@ -217,6 +279,11 @@ class Chatbot {
 
     senderElement.textContent = sender;
     contentElement.textContent = message;
+
+    if (sender === "Asistente" && this.ttsEnabled) {
+      this.speak(message);
+    }
+
     this.chatbox.appendChild(messageElement);
     this.chatbox.scrollTop = this.chatbox.scrollHeight;
   }
