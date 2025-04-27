@@ -34,7 +34,6 @@ class Chatbot {
   private sendButton: HTMLButtonElement;
   private resetButton: HTMLButtonElement;
   private ttsButton: HTMLButtonElement;
-  private sttButton: HTMLButtonElement;
   private ttsEnabled: boolean = false;
 
   /**
@@ -72,7 +71,7 @@ class Chatbot {
     this.ttsButton = document.getElementById("ttsButton") as HTMLButtonElement;
 
 
-    if (!this.chatbox || !this.userInput || !this.sendButton || !this.resetButton || !this.sttButton || !this.ttsButton) {
+    if (!this.chatbox || !this.userInput || !this.sendButton || !this.resetButton || !this.ttsButton) {
       console.error("Error: No se encontraron los elementos necesarios en el DOM.");
       return;
     }

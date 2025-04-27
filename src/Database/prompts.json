@@ -113,8 +113,7 @@
         "keywords": ["seguro", "protección", "vida", "hogar", "automóvil", "salud"],
         "prioridad": 12
       }
-    ],
-    "estrategia": "filtrar"
+    ]
   },
   "https://bancadigital.ruralvia.com/CA-FRONT/NBE/web/particulares/#/login": {
     "elementos": [
@@ -123,6 +122,8 @@
         "tipo": "campo de texto",
         "descripcion": "Campo donde el usuario debe ingresar su identificación para acceder a la banca online.",
         "ubicacion": "parte central de la página",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["DNI", "NIE", "identificación", "usuario", "acceso"],
         "prioridad": 1
       },
       {
@@ -130,6 +131,8 @@
         "tipo": "campo de texto",
         "descripcion": "Campo donde el usuario debe ingresar su clave de acceso.",
         "ubicacion": "parte central de la página, debajo del campo de usuario",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["contraseña", "clave", "acceso", "usuario"],
         "prioridad": 2
       },
       {
@@ -138,14 +141,18 @@
         "descripcion": "Permite al usuario iniciar sesión en su cuenta de banca digital.",
         "ubicacion": "debajo del campo de contraseña",
         "apariencia": "Verde más claro que el fondo y letras oscuras, obtiene su color cuando has introducido el DNI/NIE y la contraseña",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["entrar", "login", "acceso", "usuario", "clave", "contraseña"],
         "prioridad": 3
       },
       {
         "nombre": "He olvidado mi contraseña",
         "tipo": "enlace",
-        "descripcion": "Redirige a la página de recuperación de contraseña, ahí puedes cambiar la contraseña.",
+        "descripcion": "Redirige a la página de recuperación de contraseña, ahí puedes cambiar la contraseña. Si el usuario olvidó su contraseña, puede hacer clic en este enlace directamente sin necesidad de hacer pasos previos",
         "ubicacion": "debajo del campo de texto 'Contraseña'",
         "apariencia": "Texto blanco",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["olvidar", "contraseña", "recuperar", "cambiar", "recordar"],
         "prioridad": 4
       },
       {
@@ -154,10 +161,11 @@
         "descripcion": "Enlace a la sección de inicio de sesión con pasaporte.",
         "ubicacion": "debajo del campo de texto 'DNI/NIE'",
         "apariencia": "Texto blanco",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["pasaporte", "acceso", "login"],
         "prioridad": 5
       }
-    ],
-    "estrategia": "enviar_todo"
+    ]
   },
   "https://www.vueling.com/es": ""
 }

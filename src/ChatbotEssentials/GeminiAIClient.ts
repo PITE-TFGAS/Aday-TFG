@@ -233,14 +233,8 @@ class GeminiAIClient {
     }
 
     const elements = data[url].elementos;
-    if (data[url].estrategia === "filtrar") {
-      const filteredElements = filterElements(elements, prompt, 5);
-      return this.formatElements(filteredElements, "Elementos filtrados");
-    } else if (data[url].estrategia === "enviar_todo") {
-      return this.formatElements(elements, "Todos los elementos");
-    }
-
-    return "";
+    const filteredElements = filterElements(elements, prompt, 5);
+    return this.formatElements(filteredElements, "Elementos de la página filtrados");
   }
 
   /**
