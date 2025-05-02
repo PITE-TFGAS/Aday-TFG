@@ -57,6 +57,7 @@ function setupChatbot() {
       const userSettings = result.userSettings || defaultSettings;
 
       chatbot = new Chatbot(API_KEY, userSettings);
+      chatbot.appendMessage("Asistente",`¡Hola!, soy tu asistente virtual y voy a ayudarte en todo lo que pueda.\nPara empezar, escribe tu objetivo en el cuadro de texto de arriba, una vez lo hayas escrito puedes hablar conmigo utilizando el cuadro de texto y presionando la tecla Enter o el botón de enviar.\nUna vez hayas logrado tu objetivo, puedes presionar el botón de resolver objetivo para que yo lo elimine y puedas escribir otro objetivo.\nEspero que te ayude en todo lo que necesites. ¡Vamos a empezar!`);
 
       if (!result.userSettings) {
         console.warn("No se encontraron ajustes. Redirigiendo a la página de configuración...");

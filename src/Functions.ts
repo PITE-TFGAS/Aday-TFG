@@ -122,4 +122,20 @@ function filterElements(
     });
 }
 
-export { readPrompts, extractKeywords, filterElements };
+function findRelevantUrl(currentUrl: string, jsonUrls: string[]): string | null {
+  if (jsonUrls.includes(currentUrl)) {
+    return currentUrl;
+  }
+
+  const partialMatches = jsonUrls.filter(url => currentUrl.startsWith(url));
+
+  if (partialMatches.length === 0) {
+    return null;
+  }
+
+  return partialMatches.reduce((prev, curr) =>
+    curr.length > prev.length ? curr : prev
+  );
+}
+
+export { readPrompts, extractKeywords, filterElements, spanishStemmer, findRelevantUrl };

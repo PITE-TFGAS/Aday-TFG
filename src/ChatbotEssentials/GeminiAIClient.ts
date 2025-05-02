@@ -12,7 +12,7 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistoryManager from "./ChatHistoryManager";
-import { readPrompts, filterElements } from "../Functions";
+import { readPrompts, filterElements, findRelevantUrl } from "../Functions";
 
 /**
  * The `GeminiAIClient` class provides an interface for interacting with the Gemini AI model.
@@ -72,7 +72,8 @@ class GeminiAIClient {
   
     let instructions: string = 
       `Eres 'PITEChat', un asistente paciente y empático para personas mayores. Tu voz es cálida, como un familiar explicando algo por teléfono. Sigue estas reglas:\n\n`;
-  
+      instructions += `   - No incluyas pensamientos internos o auto-revisiones en tus respuestas.\n`;
+
     if (usesInternet) {
       counter++;
       instructions += `${counter}. Lenguaje:\n`;
@@ -131,13 +132,6 @@ class GeminiAIClient {
     instructions += `     Asistente: "Mira en el centro de la pantalla. Verás un rectángulo blanco con la etiqueta 'Nombre de usuario'. Haz clic ahí y escribe tu nombre de usuario."\n\n`;
     instructions += `   - Usuario: "No veo el botón X"\n`;
     instructions += `     Asistente: "Está debajo del rectángulo de Y. Es un botón violeta con letras oscuras. ¿Lo ves ahora?"\n\n`;
-  
-    counter++;
-    instructions += `${counter}. Anotaciones:\n`;
-    instructions += `   - No envíes en tu mensaje 'Asistente:', el usuario ya ve que eres el asistente.\n`;
-    instructions += `   - Haz referencia solo a los elementos que se te pasan, no supongas que habrán elementos en pasos posteriores porque puede no ser así.\n`;
-    instructions += `   - Esto último que te he dicho es muy importante. Solo explica cosas de la página actual, no de páginas posteriores o diferentes.\n`;
-    instructions += `   - No le envíes al usuario el razonamiento que has llevado a cabo en la mitigación de errores.\n`;
 
     return instructions;
   }
@@ -166,14 +160,28 @@ class GeminiAIClient {
       const model = await this.getModel();
       const context = await this.buildContext(prompt, url);
       const result = await model.generateContent(context);
-      const response = result.response.text();
-
+      let response = result.response.text();
+  
+      // 1. Quita todo lo que vaya tras los ** (auto‑revisiones marcadas)
+      response = this.removeContentAfterDoubleAsterisks(response);
+  
+      // 2. Elimina cualquier sección de pensamientos internos a partir de "Antes de enviar la respuesta"
+      response = this.removeInternalThoughts(response);
+  
       this.updateChatHistory(prompt, response);
       return response;
     } catch (error) {
       console.error("Error al ejecutar el modelo Gemini:", error);
       throw error;
     }
+  }
+
+  private removeContentAfterDoubleAsterisks(response: string): string {
+    return response.replace(/\*\*.*/s, "").trim();
+  }
+
+  private removeInternalThoughts(response: string): string {
+    return response.replace(/Antes de enviar la respuesta[\s\S]*$/i, "").trim();
   }
 
   /**
@@ -191,23 +199,23 @@ class GeminiAIClient {
    * - If a URL is provided, it reads prompts from a JSON file and appends relevant context.
    * - Logs the final context string to the console for debugging purposes.
    */
-  private async buildContext(prompt: string, url: string | null): Promise<string> {
+  private async buildContext(prompt: string, currentUrl: string | null): Promise<string> {
     let context = `Instrucciones Iniciales: ${this.instructions}\n`;
     context += `Historial del chat: ${this.historyManager.getFormattedHistory()}\n`;
-
+  
     const userGoal = await new Promise<string>((resolve) => {
       chrome.storage.local.get("userGoal", (result) => {
         resolve(result.userGoal || "No definido");
       });
     });
-
+  
     context += `Objetivo del usuario: ${userGoal}\n`;
-
-    if (url) {
+  
+    if (currentUrl) {
       const data = await readPrompts('../Database/prompts.json');
-      context += this.addContextFromUrl(data, url, prompt);
+      context += this.addContextFromUrl(data, currentUrl, prompt);
     }
-
+  
     context += `Nuevo mensaje del Usuario: ${prompt}`;
     console.log("Contexto enviado al modelo:", context);
     return context;
@@ -227,14 +235,24 @@ class GeminiAIClient {
    *          - If the strategy is "enviar_todo", returns a formatted string of all elements.
    *          - Returns an empty string if no valid strategy is found.
    */
-  private addContextFromUrl(data: any, url: string, prompt: string): string {
-    if (!data[url]) {
-      return `No se encontró el contexto para la URL: ${url}\nPuedes preguntarle al usuario qué ve.\n`;
+  private addContextFromUrl(data: any, currentUrl: string, prompt: string): string {
+    const jsonUrls = Object.keys(data);
+  
+    // Encuentra la URL más relevante
+    const relevantUrl = findRelevantUrl(currentUrl, jsonUrls);
+  
+    if (!relevantUrl) {
+      return `No se encontró el contexto para la URL: ${currentUrl}\nPuedes preguntarle al usuario qué ve.\n`;
     }
-
-    const elements = data[url].elementos;
-    const filteredElements = filterElements(elements, prompt, 5);
-    return this.formatElements(filteredElements, "Elementos de la página filtrados");
+  
+    const elements = data[relevantUrl].elementos;
+    if (data[relevantUrl].estrategia === "filtrar") {
+      const filteredElements = filterElements(elements, prompt, 5);
+      return this.formatElements(filteredElements, "Elementos filtrados");
+    } else if (data[relevantUrl].estrategia === "enviar_todo") {
+      return this.formatElements(elements, "Todos los elementos");
+    }
+    return "";
   }
 
   /**

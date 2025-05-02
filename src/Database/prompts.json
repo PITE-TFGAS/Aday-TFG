@@ -113,7 +113,8 @@
         "keywords": ["seguro", "protección", "vida", "hogar", "automóvil", "salud"],
         "prioridad": 12
       }
-    ]
+    ],
+    "estrategia": "filtrar"
   },
   "https://bancadigital.ruralvia.com/CA-FRONT/NBE/web/particulares/#/login": {
     "elementos": [
@@ -165,7 +166,332 @@
         "keywords": ["pasaporte", "acceso", "login"],
         "prioridad": 5
       }
-    ]
+    ],
+    "estrategia": "enviar_todo"
   },
-  "https://www.vueling.com/es": ""
+  "https://www.bintercanarias.com/es": {
+    "elementos": [
+      {
+        "nombre": "Logotipo de BinterCanarias",
+        "tipo": "imagen",
+        "descripcion": "Logotipo oficial de la aerolínea, que actúa como enlace a la página principal al hacer clic sobre él. Su diseño distintivo sirve como referencia visual para la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["logo", "BinterCanarias", "imagen", "inicio", "marca"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Selector de idioma",
+        "tipo": "desplegable",
+        "descripcion": "Menú desplegable que permite al usuario seleccionar el idioma de la web entre Español, Inglés, Francés, Portugués e Italiano, cambiando inmediatamente la interfaz al idioma elegido.",
+        "ubicacion": "Encabezado, a la derecha del logotipo.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["idioma", "ES", "EN", "FR", "PT", "IT", "cambiar idioma"],
+        "prioridad": 5
+      },
+      {
+        "nombre": "Menú de navegación principal",
+        "tipo": "menú",
+        "descripcion": "Barra de navegación que permite al usuario acceder a diferentes secciones clave del sitio web: 'Descubrir', 'Reservar y gestionar', 'Preparar el viaje', 'BinterMás' y 'Web Corporativa'. Cada sección está organizada en una lista desplegable con subcategorías específicas.",
+        "ubicacion": "Justo debajo del encabezado.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["menú", "navegación", "categorías", "Descubrir", "Reservar"],
+        "prioridad": 4
+      },
+      {
+        "nombre": "Carrusel principal",
+        "tipo": "carrusel",
+        "descripcion": "Slider dinámico con promociones destacadas de la aerolínea, incluyendo el 'BINTAZO', una oferta con precios especiales en vuelos. Cada diapositiva contiene imágenes llamativas y enlaces directos para consultar más detalles.",
+        "ubicacion": "Zona central de la página, justo debajo del menú.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["slider", "ofertas", "BINTAZO", "promoción", "vuelos"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Formulario de búsqueda de vuelos",
+        "tipo": "formulario",
+        "descripcion": "Formulario interactivo con opciones específicas para seleccionar los detalles del vuelo. Incluye botones individuales para 'Origen' y 'Destino', un calendario para elegir las fechas de ida y vuelta, un campo para indicar el número de pasajeros y una opción para seleccionar tarifas especiales. Al final del formulario, el usuario puede pulsar el botón verde con letras blancas 'Buscar' para ver los resultados disponibles.",
+        "ubicacion": "Inmediatamente debajo del carrusel.",
+        "apariencia": "Rectángulo blanco con bordes redondeados, con botones desplegables bien diferenciados para cada opción, y un botón de 'Buscar' de color verde con letras blancas.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["buscar vuelos", "origen", "destino", "pasajeros", "fecha", "tarifa"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Consulta de reservas",
+        "tipo": "sección",
+        "descripcion": "Área dedicada a la gestión de reservas, donde el usuario puede introducir su localizador y apellido para revisar o modificar su itinerario.",
+        "ubicacion": "Sección ubicada tras el formulario de búsqueda.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["mis reservas", "localizador", "apellido", "consulta", "gestión"],
+        "prioridad": 6
+      },
+      {
+        "nombre": "Suscripción al newsletter",
+        "tipo": "formulario",
+        "descripcion": "Formulario que permite al usuario introducir su correo electrónico para recibir ofertas y novedades sobre vuelos y promociones directamente en su email.",
+        "ubicacion": "Cerca del pie de página, en la sección 'No te pierdas nuestras ofertas y novedades'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["newsletter", "email", "suscribirme", "ofertas", "actualizaciones"],
+        "prioridad": 7
+      },
+      {
+        "nombre": "Enlaces de pie de página",
+        "tipo": "listado de enlaces",
+        "descripcion": "Lista con enlaces importantes que incluyen 'Aviso legal', 'Política de privacidad', 'Política de cookies' y 'Accesibilidad', permitiendo al usuario acceder fácilmente a la información sobre el funcionamiento del sitio y sus términos de uso.",
+        "ubicacion": "Extremo inferior de la página.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["aviso legal", "privacidad", "cookies", "accesibilidad", "footer", "información"],
+        "prioridad": 8
+      }
+    ],
+    "estrategia": "filtrar"
+  },
+  "https://www.bintercanarias.com/es/compra/eleccion-vuelo": {
+    "elementos": [
+      {
+        "nombre": "Selector de ida",
+        "tipo": "menú",
+        "descripcion": "Componente interactivo en la parte superior que permite seleccionar el día para el vuelo de ida. Muestra todas las opciones disponibles con información detallada de precios, horarios y aeropuertos de salida y llegada. Si en la fecha seleccionada no existen vuelos, se visualiza un mensaje indicativo de la falta de disponibilidad, comportamiento idéntico al del selector de vuelta, permitiendo así al usuario cambiar la fecha sin confusión.",
+        "ubicacion": "Justo debajo del logotipo de Binter, en la parte superior de la página.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["ida", "origen", "aeropuerto", "vuelo", "fecha", "disponibilidad"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Selector de vuelta",
+        "tipo": "menú",
+        "descripcion": "Menú interactivo que permite elegir el día para el vuelo de vuelta. Ofrece una lista de opciones con sus respectivos precios, horarios y detalles del aeropuerto de salida y llegada. Si no hay vuelos disponibles en la fecha elegida, se despliega un mensaje que informa al usuario, ofreciendo la posibilidad de cambiar la fecha para visualizar alternativas, de forma idéntica al selector de ida.",
+        "ubicacion": "Ubicado inmediatamente debajo del selector de ida en la sección media de la interfaz.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["vuelta", "destino", "aeropuerto", "vuelo", "fecha", "disponibilidad"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Residente",
+        "tipo": "selector de residencia",
+        "descripcion": "Selector que permite al usuario indicar si es residente o no, lo que ajusta dinámicamente las tarifas ofrecidas. Incluye dos botones claramente etiquetados ('Residente' y 'No residente') y se mantiene fijo en la parte superior derecha al desplazarse la página, garantizando que la opción esté siempre a la mano para el ajuste de precios.",
+        "ubicacion": "Situado en la esquina superior derecha, con comportamiento fijo durante el scroll.",
+        "apariencia": "Botones de contraste marcado: uno en azul oscuro para 'Residente' y otro similar para 'No residente', con tipografía en blanco y bordes definidos para una fácil identificación.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["residente", "no residente", "tarifa", "residencia", "selección"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Resumen",
+        "tipo": "Ventana con información",
+        "descripcion": "Panel informativo que consolida y muestra de forma clara y actualizada todos los datos ingresados por el usuario. En él se reflejan las fechas, horarios, aeropuertos (de salida y llegada) tanto del vuelo de ida como del de vuelta –incluyendo el mensaje de 'no hay vuelos' en caso de no disponibilidad–, el número de pasajeros y el coste total. Además, se incluye un enlace para modificar la búsqueda, facilitando ajustes sin perder el contexto.",
+        "ubicacion": "Localizado en la parte superior derecha, justo debajo del selector de residencia, y permanece visible al hacer scroll.",
+        "apariencia": "Diseño de tarjeta estilo recibo, con fondo blanco, bordes redondeados y tipografía legible que resalta el título 'Resumen' y el enlace para 'Modificar búsqueda'.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["resumen", "detalles", "vuelos", "selección", "modificar", "información"],
+        "prioridad": 4
+      },
+      {
+        "nombre": "Continuar",
+        "tipo": "botón",
+        "descripcion": "Botón de acción que permite avanzar al siguiente paso del proceso de compra una vez completada la selección de vuelos de ida y vuelta. Se activa al confirmarse la elección y destaca por un diseño llamativo que guía al usuario para finalizar su operación.",
+        "ubicacion": "Colocado de manera estratégica debajo del panel de resumen, facilitando la transición hacia el proceso de pago.",
+        "apariencia": "Botón de color verde con letras blancas que dice 'Continuar', diseñado para ser intuitivo y accesible.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["continuar", "compra", "confirmar", "proceso", "acción", "botón"],
+        "prioridad": 5
+      },
+      {
+        "nombre": "Logotipo de BinterCanarias",
+        "tipo": "imagen",
+        "descripcion": "Logotipo de la aerolínea que sirve de ancla visual y enlace a la página de inicio.",
+        "ubicacion": "esquina superior izquierda del encabezado",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["logo", "BinterCanarias", "imagen", "inicio", "Binter"],
+        "prioridad": 6
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://www.bintercanarias.com/es/compra/datos-pasajeros": {
+    "elementos": [
+      {
+        "nombre": "Residencia",
+        "tipo": "selector",
+        "descripcion": "Selector que permite al usuario indicar si es residente o no, lo cual repercute en el cálculo de tarifas. Muestra dos botones claramente diferenciados para 'Residente' y 'No residente', permitiendo un ajuste inmediato en la tarifa final.",
+        "ubicacion": "Parte superior de la página, debajo de la cabecera.",
+        "apariencia": "Dos botones a seleccionar; uno para 'Residente' y otro para 'No residente', cuando lo seleccionas se marca en verde.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["residencia", "tarifa", "residente", "no residente", "selector"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Adulto",
+        "tipo": "formulario",
+        "descripcion": "Formulario principal para ingresar los datos personales del pasajero. Incluye campos para seleccionar el título (Sr./Sra.), ingresar nombre, apellidos, tarjeta de fidelización y tipo de documento de identidad. Además, incorpora opciones para marcar si se viaja sin documento en el caso de menores de 14 años y para registrar datos de contacto de un familiar, en caso de ser necesario.",
+        "ubicacion": "Se sitúa en la parte central izquierda de la página, constituyendo el bloque principal de información.",
+        "apariencia": "Diseño organizado con campos de entrada claros, etiquetas descriptivas y validaciones para los campos obligatorios.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["pasajero", "datos personales", "formulario", "identificación", "nombre", "apellido"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Servicios especiales",
+        "tipo": "formulario",
+        "descripcion": "Sección dedicada a la selección de servicios especiales. Permite al usuario indicar si requiere asistencia especial o si viaja con animal, ajustando así la atención que se prestará durante el viaje.",
+        "ubicacion": "Ubicada justo debajo del formulario de datos personales, separada para destacar opciones adicionales.",
+        "apariencia": "Incluye casillas de verificación claramente etiquetadas para opciones como 'Pasajero con Necesidades Especiales' y 'Transporte de animal'.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["servicios especiales", "asistencia", "accesibilidad", "transporte animal"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Datos de contacto para la reserva",
+        "tipo": "formulario",
+        "descripcion": "Área de datos de contacto que recopila la información necesaria para la gestión de la reserva. Requiere el ingreso y confirmación del e-mail, así como el número de teléfono, y permite especificar a quién corresponden los datos en caso de que sean de otra persona.",
+        "ubicacion": "Situada en la parte inferior del formulario principal, en la sección de contacto.",
+        "apariencia": "Campos de texto distribuidos de forma lineal, con indicadores claros en los campos obligatorios para garantizar la precisión en la información.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["contacto", "e-mail", "teléfono", "datos de reserva", "confirmación"],
+        "prioridad": 4
+      },
+      {
+        "nombre": "Ayúdanos a conocerte mejor",
+        "tipo": "formulario",
+        "descripcion": "Sección opcional que solicita información sobre el motivo del viaje, permitiendo conocer mejor al usuario y personalizar su experiencia. Las opciones disponibles son 'Trabajo', 'Ocio' y 'Otro'.",
+        "ubicacion": "Ubicada al final de los formularios, justo antes del resumen, para facilitar su acceso sin interrumpir el flujo principal.",
+        "apariencia": "Presenta un menú desplegable o conjunto de botones de selección, diseñado de forma intuitiva.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["motivo", "viaje", "personalización", "información adicional"],
+        "prioridad": 6
+      },
+      {
+        "nombre": "Continuar",
+        "tipo": "botón",
+        "descripcion": "Botón de acción que permite avanzar al siguiente paso del proceso de compra una vez cumplimentada toda la información de los pasajeros. Se activa al confirmarse la elección y destaca por un diseño llamativo que guía al usuario para finalizar su operación.",
+        "ubicacion": "Colocado de manera estratégica debajo del panel de resumen, facilitando la transición hacia el proceso de pago. En la derecha de la página.",
+        "apariencia": "Botón de color verde con letras blancas que dice 'Continuar', diseñado para ser intuitivo y accesible.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["continuar", "compra", "confirmar", "proceso", "acción", "botón"],
+        "prioridad": 5
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://www.bintercanarias.com/es/compra/servicios-adicionales": {
+    "elementos": [
+      {
+        "nombre": "Mapa de asientos",
+        "tipo": "mapa interactivo",
+        "descripcion": "Componente central que permite seleccionar el asiento para el vuelo, arriba a la izquierda posee unas pestañitas para elegir el vuelo. El mapa muestra filas numeradas y columnas etiquetadas con letras, representando de forma clara todos los asientos disponibles. Cada asiento se diferencia por su estado: verde para asientos disponibles, gris con una 'X' para los no disponibles y verde con ícono de persona para los ya asignados. Se resaltan, asimismo, las salidas de emergencia para que el usuario pueda hacer una elección informada. Si no se elige asiento, se asigna automáticamente uno al azar.",
+        "ubicacion": "Ocupa la mayor parte del área central de la página.",
+        "apariencia": "Visualización gráfica interactiva con iconos y colores distintivos que facilitan la rápida identificación del estado de cada asiento.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["asientos", "mapa", "selección", "disponibilidad", "vuelo", "emergencia"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Leyenda de asientos",
+        "tipo": "panel informativo",
+        "descripcion": "Panel descriptivo que explica el significado de los distintos colores y símbolos del mapa de asientos. Se indican los íconos para asientos disponibles, no disponibles y asignados, así como la identificación de las salidas de emergencia.",
+        "ubicacion": "Ubicado cerca del mapa, ya sea en su parte inferior o lateral, para su consulta constante.",
+        "apariencia": "Diseño sencillo con íconos y textos breves, presentados sobre un fondo neutro que garantiza una lectura clara.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["leyenda", "iconos", "explicación", "asientos"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Resumen del vuelo",
+        "tipo": "Ventana con información",
+        "descripcion": "Panel informativo que muestra de forma resumida los detalles relevantes del vuelo, incluyendo origen, destino, número de pasajeros y el precio total de la reserva (188.04 euros). Este resumen se actualiza en función de las selecciones realizadas, facilitando al usuario tener una visión global de su reserva.",
+        "ubicacion": "Ubicado en el lateral derecho de la página, de modo que permanezca visible durante la selección de asientos.",
+        "apariencia": "Diseño tipo tarjeta con fondo claro y bordes suaves, que resalta la información clave para una revisión rápida.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["resumen", "vuelo", "detalle", "precio", "pasajeros"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Continuar",
+        "tipo": "botón",
+        "descripcion": "Botón de acción que permite confirmar la selección de servicios adicionales y avanzar al siguiente paso del proceso de compra.",
+        "ubicacion": "Situado de forma prominente en la parte inferior de la pantalla, facilitando su acceso una vez finalizada la elección.",
+        "apariencia": "Botón de alto contraste, habitualmente de color verde y con letras blancas que indican 'Continuar'.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["continuar", "confirmar", "siguiente", "acción", "compra"],
+        "prioridad": 4
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://www.bintercanarias.com/es/compra/payment": {
+    "elementos": [
+      {
+        "nombre": "Donación a favor de UNICEF",
+        "tipo": "sección de donación",
+        "descripcion": "Área que ofrece al usuario la opción de realizar una donación a UNICEF, contribuyendo a ayudar a niños y niñas necesitados. Incluye una casilla de verificación acompañada de un texto informativo donde se explican los términos y condiciones y la política de privacidad de UNICEF Comité Español, además de un enlace para consultar más información sobre este proyecto.",
+        "ubicacion": "Ubicada en la parte superior izquierda del formulario, siendo una de las primeras acciones que puede visualizar el usuario al iniciar el proceso de pago.",
+        "apariencia": "Presenta un diseño discreto con un checkbox y un texto explicativo que integra un enlace, manteniendo una apariencia coherente con el resto del formulario.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["donación", "UNICEF", "ayuda", "términos", "condiciones", "política privacidad"],
+        "prioridad": 7
+      },
+      {
+        "nombre": "Código descuento / tarjeta regalo",
+        "tipo": "formulario",
+        "descripcion": "Espacio destinado a la introducción de un código de descuento o tarjeta regalo. Permite al usuario ingresar la referencia correspondiente y aplicar descuentos sobre el importe final de la reserva mediante un botón de acción.",
+        "ubicacion": "Ubicado justo debajo de la sección de donación, dentro del flujo de validación del pago.",
+        "apariencia": "Consiste en un campo de entrada de texto para la referencia y un botón etiquetado 'Aplicar', con un diseño funcional y minimalista.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["descuento", "tarjeta regalo", "código", "referencia", "aplicar"],
+        "prioridad": 6
+      },
+      {
+        "nombre": "Selección de forma de pago",
+        "tipo": "selector de método de pago",
+        "descripcion": "Módulo interactivo que permite elegir el método de pago, ofreciendo opciones como VISA, Mastercard y Bizum. Cada alternativa se muestra de forma clara para que el usuario seleccione su opción preferida y pueda completar el pago.",
+        "ubicacion": "Situado en la sección central del proceso de pago, facilitando su identificación y uso.",
+        "apariencia": "Las opciones se presentan mediante botones o iconos identificativos que reflejan cada método de pago con un estilo ordenado y visualmente atractivo.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["pago", "VISA", "Mastercard", "Bizum", "selección", "método"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Aceptación de términos y condiciones",
+        "tipo": "checkbox",
+        "descripcion": "Casilla de verificación obligatoria para aceptar las condiciones de la tarifa, el contrato, y la política de privacidad. Además, confirma que el usuario conoce el plan de vuelo, la documentación requerida y las restricciones sobre el transporte de artículos peligrosos.",
+        "ubicacion": "Ubicada justo debajo del módulo de selección de pago, en una posición destacada para asegurar su visibilidad.",
+        "apariencia": "Se muestra como una casilla acompañada de un extenso texto explicativo que detalla cada uno de los términos y condiciones a cumplir.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["términos", "condiciones", "contrato", "política", "aceptación", "plan de vuelo"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Factura a nombre de empresa o autónomo",
+        "tipo": "checkbox",
+        "descripcion": "Opción adicional que permite al usuario solicitar la emisión de la factura a nombre de una empresa o profesional autónomo, configurando así los datos fiscales de la reserva de manera específica.",
+        "ubicacion": "Normalmente se encuentra junto a la sección de aceptación de términos, en la parte inferior del formulario de pago.",
+        "apariencia": "Presenta una casilla de verificación acompañada de una etiqueta descriptiva que aclara la función, con un diseño simple y discreto.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["factura", "empresa", "autónomo", "datos fiscales"],
+        "prioridad": 5
+      },
+      {
+        "nombre": "Resumen de la reserva",
+        "tipo": "panel informativo",
+        "descripcion": "Panel que consolida y muestra todos los detalles relevantes de la reserva. Incluye los itinerarios de los vuelos (fechas, rutas, horarios, números de vuelo y el tipo de tarifa), el número de pasajeros y el importe final, junto con un enlace para ver el desglose completo de los importes.",
+        "ubicacion": "Ubicado en el lateral derecho de la pantalla, permitiendo al usuario revisar la información mientras completa el proceso de pago.",
+        "apariencia": "Diseño tipo tarjeta con fondo neutro y bordes suaves que ayudan a resaltar la información esencial de forma clara y organizada.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["resumen", "vuelo", "itinerario", "precio", "detalle", "reserva"],
+        "prioridad": 4
+      },
+      {
+        "nombre": "Continuar",
+        "tipo": "botón",
+        "descripcion": "Botón de acción que, al ser pulsado, confirma los datos introducidos y avanza al siguiente paso del proceso de compra. Su activación implica la verificación y aceptación de todas las opciones y condiciones previamente seleccionadas.",
+        "ubicacion": "Situado de forma prominente en la parte inferior de la página, facilitando la transición una vez finalizada la revisión de la reserva.",
+        "apariencia": "Generalmente de alto contraste, suele ser de color verde con texto blanco que indica 'CONTINUAR', diseñado para captar la atención del usuario.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["continuar", "confirmar", "pago", "acción", "botón"],
+        "prioridad": 3
+      }
+    ],
+    "estrategia": "filtrar"
+  }
 }
