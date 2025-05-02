@@ -11,6 +11,7 @@
  */
 
 import GeminiAIClient from '../ChatbotEssentials/GeminiAIClient';
+import { marked } from 'marked';
 
 /**
  * The `Chatbot` class represents a chatbot interface that interacts with the Gemini AI client.
@@ -100,26 +101,64 @@ class Chatbot {
    */
   private speak(text: string): void {
     if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
+      const cleanText = this.removeMarkdown(text);
+      const utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.lang = 'es-ES';
-      utterance.rate = 0.9; // Velocidad ligeramente reducida para mayor claridad
-      utterance.pitch = 1.2; // Tono un poco más alto para mejor audibilidad
-      
-      // Configuración de voz preferida para español
-      const voices = speechSynthesis.getVoices();
-      const spanishVoice = voices.find(voice => 
-        voice.lang.includes('es') && voice.name.includes('Natural')
-      );
-      
-      if (spanishVoice) {
-        utterance.voice = spanishVoice;
-      }
+      utterance.rate = 0.9;
+      utterance.pitch = 1.2;
 
-      speechSynthesis.speak(utterance);
+      this.setVoice(utterance).then(() => {
+          speechSynthesis.speak(utterance);
+      });
     } else {
       console.warn('La síntesis de voz no está soportada en este navegador');
+      this.disableTTSButton();
+    }
+  }
+
+  private removeMarkdown(text: string): string {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1')  // Negritas
+      .replace(/\*(.*?)\*/g, '$1')       // Cursivas
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Enlaces
+      .replace(/#+\s*/g, '')             // Encabezados
+      .replace(/`{1,3}(.*?)`{1,3}/g, '$1') // Código
+      .replace(/\n{2,}/g, '\n')         // Saltos de línea múltiples
+      .trim();
+  }
+
+  private async setVoice(utterance: SpeechSynthesisUtterance): Promise<void> {
+    return new Promise((resolve) => {
+      const voices = speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        this.selectSpanishVoice(utterance, voices);
+        resolve();
+      } else {
+        speechSynthesis.onvoiceschanged = () => {
+          const updatedVoices = speechSynthesis.getVoices();
+          this.selectSpanishVoice(utterance, updatedVoices);
+          resolve();
+        };
+      }
+    });
+  }
+
+  private selectSpanishVoice(utterance: SpeechSynthesisUtterance, voices: SpeechSynthesisVoice[]): void {
+    const spanishVoices = voices.filter(v => v.lang.includes('es'));
+    const preferredVoice = spanishVoices.find(v => v.name.includes('Natural')) || 
+      spanishVoices.find(v => v.name.includes('Español')) || 
+      spanishVoices[0];
+
+    if (preferredVoice) {
+        utterance.voice = preferredVoice;
+    }
+  }
+
+  private disableTTSButton(): void {
+    if (this.ttsButton) {
       this.ttsButton.disabled = true;
       this.ttsButton.title = "Voz no soportada";
+      this.ttsButton.classList.remove('active-feature');
     }
   }
 
@@ -260,31 +299,43 @@ class Chatbot {
    * @param sender - The sender of the message (e.g., "Tú" or "Asistente").
    * @param message - The content of the message to be displayed.
    */
-  public appendMessage(sender: string, message: string): void {
+  public async appendMessage(sender: string, message: string): Promise<void> {
     const template = document.getElementById("message-template") as HTMLTemplateElement;
     if (!template) {
       console.error("Error: No se encontró la plantilla del mensaje.");
       return;
     }
 
-    const messageElement = document.importNode(template.content, true);
+    const messageElement = document.importNode(template.content, true).firstElementChild as HTMLElement;
     const senderElement = messageElement.querySelector(".sender") as HTMLElement;
     const contentElement = messageElement.querySelector(".content") as HTMLElement;
-
+    
     if (!senderElement || !contentElement) {
       console.error("Error: No se encontraron los elementos de la plantilla.");
       return;
     }
 
     senderElement.textContent = sender;
-    contentElement.textContent = message;
+    contentElement.innerHTML = await marked.parse(message);
+
+    this.chatbox.appendChild(messageElement);
+
+    this.scrollToMessageStart(messageElement);
 
     if (sender === "Asistente" && this.ttsEnabled) {
       this.speak(message);
     }
+}
 
-    this.chatbox.appendChild(messageElement);
-    this.chatbox.scrollTop = this.chatbox.scrollHeight;
+  private scrollToMessageStart(messageElement: HTMLElement): void {
+    requestAnimationFrame(() => {
+      const messageTop = messageElement.offsetTop - this.chatbox.offsetTop;
+      
+      this.chatbox.scrollTo({
+          top: messageTop,
+          behavior: 'smooth'
+      });
+    });
   }
 
   /**

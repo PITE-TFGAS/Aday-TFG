@@ -59,81 +59,29 @@ class GeminiAIClient {
    * - Additional annotations: Includes guidelines for formatting and scope of explanations.
    */
   private generateInstructions(): string {
-    const helpIdentifying: boolean = this.userSettings.ayuda === 'si';
-    const needsConfirmations: boolean = this.userSettings.confirmar === 'si';
-    const usesInternet: boolean = this.userSettings.internet === 'si';
-    const prefersDetailed: boolean = this.userSettings.tecnico === 'detalladas';
-    console.log("User settings:", this.userSettings);
-    console.log("Help Identifying:", helpIdentifying);
-    console.log("Needs Confirmations:", needsConfirmations);
-    console.log("Uses Internet:", usesInternet);
-    console.log("Prefers Detailed:", prefersDetailed);
-    let counter: number = 0;
+    const helpIdentifying = this.userSettings.ayuda === 'si';
+    const needsConfirmations = this.userSettings.confirmar === 'si';
+    const usesInternet = this.userSettings.internet === 'si';
+    const prefersDetailed = this.userSettings.tecnico === 'detalladas';
   
-    let instructions: string = 
-      `Eres 'PITEChat', un asistente paciente y empático para personas mayores. Tu voz es cálida, como un familiar explicando algo por teléfono. Sigue estas reglas:\n\n`;
-      instructions += `   - No incluyas pensamientos internos o auto-revisiones en tus respuestas.\n`;
-
-    if (usesInternet) {
-      counter++;
-      instructions += `${counter}. Lenguaje:\n`;
-      instructions += `   - El usuario suele utilizar internet, puedes hacer uso de palabras más técnicas como "campo de texto", "click", etc.\n\n`;
-    } else {
-      counter++;
-      instructions += `${counter}. Lenguaje:\n`;
-      instructions += `   - Evita palabras técnicas: en vez de "campo de texto", di "rectángulo blanco donde puedes escribir" o cosas similares.\n\n`;
-    }
-    
-    if (needsConfirmations) {
-      counter++;
-      instructions += `${counter}. Confirmaciones:\n`;
-      instructions += `   - Siempre pregunta: '¿Quieres que siga con el siguiente paso?' o '¿Entiendes esto?'. Si el usuario no responde en 2 intentos, ofrece simplificar la explicación.\n\n`;
-    } else {
-      counter++;
-      instructions += `${counter}. Confirmaciones:\n`;
-      instructions += `   - No es necesario confirmar cada paso. Solo pregunta si el usuario parece confundido.\n\n`;
-    } 
+    const rules: string[] = [
+      "Eres PITEChat: paciente y empático. Tu voz es cálida, como un familiar explicando algo por teléfono. No incluyas pensamientos internos.",
+      usesInternet
+        ? "Usa términos técnicos (campo de texto, click, etc.)."
+        : "Evita jerga técnica; describe lo esencial.",
+      needsConfirmations
+        ? "Confirma cada paso: '¿Entiendes?' o '¿Continuamos?'."
+        : "No confirmes a menos que el usuario esté perdido.",
+      helpIdentifying
+        ? "Describe ubicación visual: color, posición, forma."
+        : "Nombra los elementos por su etiqueta o nombre.",
+      prefersDetailed
+        ? "Explica paso a paso de forma detallada."
+        : "Responde de forma breve y directa.",
+      "Antes de enviar, verifica que ayudas al objetivo del usuario y sigues el JSON."
+    ];
   
-    if (helpIdentifying) {
-      counter++;
-      instructions += `${counter}. Ayuda para identificar elementos:\n`;
-      instructions += `   - Para describir elementos de la página, usa formatos similares o como este:\n`;
-      instructions += `     'El botón está abajo del todo, es verde claro y se ilumina al pasar el ratón.'\n`;
-    } else {
-      counter++;
-      instructions += `${counter}. Ayuda para identificar elementos:\n`;
-      instructions += `   - No es necesario ayudar a identificar elementos visualmente a no ser que el usuario no lo encuentre. Simplemente refierete a ellos por su nombre.\n\n`;
-    }
-
-    if (prefersDetailed) {
-      counter++;
-      instructions += `${counter}. Explicaciones detalladas:\n`;
-      instructions += `   - Proporciona explicaciones paso a paso, asegurándote de que el usuario entienda cada parte antes de continuar.\n\n`;
-      instructions += `   - Utiliza el patrón Cognitive Verifier:\n`;
-      instructions += `     - Si explicas un paso complejo (ej: 'Haz clic en X'), pregunta:\n`;
-      instructions += `       '¿Ves el botón ${helpIdentifying ? 'verde claro arriba a la derecha' : 'que pone X'}? Si no lo encuentras, dime qué ves en su lugar.'\n`;
-    } else {
-      counter++;
-      instructions += `${counter}. Instrucciones directas:\n`;
-      instructions += `   - Ve al grano y proporciona instrucciones claras y concisas: Haz click en 'X' o interacciones similares.\n\n`;
-    }
-
-    counter++;
-    instructions += `${counter}. Mitigación de errores:\n`;
-    instructions += `   - Antes de enviar la respuesta, confirma si lo que has escrito es correcto:\n`;
-    instructions += `     - ¿Estoy ayudando al usuario con el "objetivo del usuario"?\n`;
-    instructions += `     - ¿Las instrucciones coinciden con el JSON proporcionado?\n`;
-    instructions += `     - ¿He tenido en cuenta las anotaciones proporcionadas?\n`;
-    if (!usesInternet) instructions += `     - ¿Evitaste términos técnicos?\n`;
-  
-    counter++;
-    instructions += `${counter}. Ejemplo de conversación:\n`;
-    instructions += `   - Usuario: "¿Dónde pongo mi nombre?"\n`;
-    instructions += `     Asistente: "Mira en el centro de la pantalla. Verás un rectángulo blanco con la etiqueta 'Nombre de usuario'. Haz clic ahí y escribe tu nombre de usuario."\n\n`;
-    instructions += `   - Usuario: "No veo el botón X"\n`;
-    instructions += `     Asistente: "Está debajo del rectángulo de Y. Es un botón violeta con letras oscuras. ¿Lo ves ahora?"\n\n`;
-
-    return instructions;
+    return rules.map((r, i) => `${i + 1}. ${r}`).join("\n") + "\n";
   }
 
 
@@ -162,26 +110,12 @@ class GeminiAIClient {
       const result = await model.generateContent(context);
       let response = result.response.text();
   
-      // 1. Quita todo lo que vaya tras los ** (auto‑revisiones marcadas)
-      response = this.removeContentAfterDoubleAsterisks(response);
-  
-      // 2. Elimina cualquier sección de pensamientos internos a partir de "Antes de enviar la respuesta"
-      response = this.removeInternalThoughts(response);
-  
       this.updateChatHistory(prompt, response);
       return response;
     } catch (error) {
       console.error("Error al ejecutar el modelo Gemini:", error);
       throw error;
     }
-  }
-
-  private removeContentAfterDoubleAsterisks(response: string): string {
-    return response.replace(/\*\*.*/s, "").trim();
-  }
-
-  private removeInternalThoughts(response: string): string {
-    return response.replace(/Antes de enviar la respuesta[\s\S]*$/i, "").trim();
   }
 
   /**

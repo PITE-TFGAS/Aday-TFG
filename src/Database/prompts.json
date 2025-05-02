@@ -210,7 +210,7 @@
       {
         "nombre": "Formulario de búsqueda de vuelos",
         "tipo": "formulario",
-        "descripcion": "Formulario interactivo con opciones específicas para seleccionar los detalles del vuelo. Incluye botones individuales para 'Origen' y 'Destino', un calendario para elegir las fechas de ida y vuelta, un campo para indicar el número de pasajeros y una opción para seleccionar tarifas especiales. Al final del formulario, el usuario puede pulsar el botón verde con letras blancas 'Buscar' para ver los resultados disponibles.",
+        "descripcion": "Formulario interactivo con opciones específicas para seleccionar los detalles del vuelo. Incluye botones individuales para 'Origen' y 'Destino', un calendario para elegir las fechas de ida y vuelta, un campo para indicar el número de pasajeros y una opción para seleccionar tarifas especiales (Importante, son gente mayor la que utiliza la aplicación). Al final del formulario, el usuario puede pulsar el botón verde con letras blancas 'Buscar' para ver los resultados disponibles.",
         "ubicacion": "Inmediatamente debajo del carrusel.",
         "apariencia": "Rectángulo blanco con bordes redondeados, con botones desplegables bien diferenciados para cada opción, y un botón de 'Buscar' de color verde con letras blancas.",
         "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
@@ -314,7 +314,7 @@
       {
         "nombre": "Residencia",
         "tipo": "selector",
-        "descripcion": "Selector que permite al usuario indicar si es residente o no, lo cual repercute en el cálculo de tarifas. Muestra dos botones claramente diferenciados para 'Residente' y 'No residente', permitiendo un ajuste inmediato en la tarifa final.",
+        "descripcion": "Selector que permite al usuario indicar si es residente o no, lo cual repercute en el cálculo de tarifas. Muestra dos botones claramente diferenciados para 'Residente' y 'No residente', permitiendo un ajuste inmediato en la tarifa final. Si se selecciona 'Residente', habrá que hacer clic en la checkbox, al lado de 'Acepto las condiciones de residencia'",
         "ubicacion": "Parte superior de la página, debajo de la cabecera.",
         "apariencia": "Dos botones a seleccionar; uno para 'Residente' y otro para 'No residente', cuando lo seleccionas se marca en verde.",
         "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
@@ -355,7 +355,7 @@
         "nombre": "Ayúdanos a conocerte mejor",
         "tipo": "formulario",
         "descripcion": "Sección opcional que solicita información sobre el motivo del viaje, permitiendo conocer mejor al usuario y personalizar su experiencia. Las opciones disponibles son 'Trabajo', 'Ocio' y 'Otro'.",
-        "ubicacion": "Ubicada al final de los formularios, justo antes del resumen, para facilitar su acceso sin interrumpir el flujo principal.",
+        "ubicacion": "Ubicada al final de los formularios, abajo del todo, para facilitar su acceso sin interrumpir el flujo principal.",
         "apariencia": "Presenta un menú desplegable o conjunto de botones de selección, diseñado de forma intuitiva.",
         "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
         "keywords": ["motivo", "viaje", "personalización", "información adicional"],
@@ -389,8 +389,8 @@
       {
         "nombre": "Leyenda de asientos",
         "tipo": "panel informativo",
-        "descripcion": "Panel descriptivo que explica el significado de los distintos colores y símbolos del mapa de asientos. Se indican los íconos para asientos disponibles, no disponibles y asignados, así como la identificación de las salidas de emergencia.",
-        "ubicacion": "Ubicado cerca del mapa, ya sea en su parte inferior o lateral, para su consulta constante.",
+        "descripcion": "Panel descriptivo que explica el significado de los distintos colores y símbolos del mapa de asientos. Se indican los íconos para asientos disponibles (Verdes), no disponibles (Gris con una X) y asignados (Tienen una personita), así como la identificación de las salidas de emergencia.",
+        "ubicacion": "Ubicado cerca del mapa, a la izquierda de este, para su consulta constante.",
         "apariencia": "Diseño sencillo con íconos y textos breves, presentados sobre un fondo neutro que garantiza una lectura clara.",
         "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
         "keywords": ["leyenda", "iconos", "explicación", "asientos"],
@@ -399,7 +399,7 @@
       {
         "nombre": "Resumen del vuelo",
         "tipo": "Ventana con información",
-        "descripcion": "Panel informativo que muestra de forma resumida los detalles relevantes del vuelo, incluyendo origen, destino, número de pasajeros y el precio total de la reserva (188.04 euros). Este resumen se actualiza en función de las selecciones realizadas, facilitando al usuario tener una visión global de su reserva.",
+        "descripcion": "Panel informativo que muestra de forma resumida los detalles relevantes del vuelo, incluyendo origen, destino, número de pasajeros y el precio total de la reserva. Este resumen se actualiza en función de las selecciones realizadas, facilitando al usuario tener una visión global de su reserva.",
         "ubicacion": "Ubicado en el lateral derecho de la página, de modo que permanezca visible durante la selección de asientos.",
         "apariencia": "Diseño tipo tarjeta con fondo claro y bordes suaves, que resalta la información clave para una revisión rápida.",
         "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
@@ -410,8 +410,18 @@
         "nombre": "Continuar",
         "tipo": "botón",
         "descripcion": "Botón de acción que permite confirmar la selección de servicios adicionales y avanzar al siguiente paso del proceso de compra.",
-        "ubicacion": "Situado de forma prominente en la parte inferior de la pantalla, facilitando su acceso una vez finalizada la elección.",
+        "ubicacion": "Situado justo debajo del Resumen del vuelo, facilitando su acceso una vez finalizada la elección.",
         "apariencia": "Botón de alto contraste, habitualmente de color verde y con letras blancas que indican 'Continuar'.",
+        "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
+        "keywords": ["continuar", "confirmar", "siguiente", "acción", "compra"],
+        "prioridad": 4
+      },
+      {
+        "nombre": "Continuar sin elegir asientos",
+        "tipo": "botón",
+        "descripcion": "Botón de acción que permite avanzar al siguiente paso del proceso de compra sin seleccionar asientos.",
+        "ubicacion": "Situado justo debajo del botón 'Continuar', no hace falta seleccionar ningún asiento.",
+        "apariencia": "Botón blanco con bordes redondos y letras negras.",
         "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
         "keywords": ["continuar", "confirmar", "siguiente", "acción", "compra"],
         "prioridad": 4
@@ -424,7 +434,7 @@
       {
         "nombre": "Donación a favor de UNICEF",
         "tipo": "sección de donación",
-        "descripcion": "Área que ofrece al usuario la opción de realizar una donación a UNICEF, contribuyendo a ayudar a niños y niñas necesitados. Incluye una casilla de verificación acompañada de un texto informativo donde se explican los términos y condiciones y la política de privacidad de UNICEF Comité Español, además de un enlace para consultar más información sobre este proyecto.",
+        "descripcion": "Área que ofrece al usuario la opción de realizar una donación a UNICEF (De manera voluntaria), contribuyendo a ayudar a niños y niñas necesitados. Incluye una casilla de verificación acompañada de un texto informativo donde se explican los términos y condiciones y la política de privacidad de UNICEF Comité Español, además de un enlace para consultar más información sobre este proyecto.",
         "ubicacion": "Ubicada en la parte superior izquierda del formulario, siendo una de las primeras acciones que puede visualizar el usuario al iniciar el proceso de pago.",
         "apariencia": "Presenta un diseño discreto con un checkbox y un texto explicativo que integra un enlace, manteniendo una apariencia coherente con el resto del formulario.",
         "incluir": ["nombre", "tipo", "descripcion", "apariencia", "ubicacion"],
