@@ -6,9 +6,9 @@
   <title>Chatbot Amigable</title>
   <style>
     :root {
-      --primary-color: #2E7D32; /* Verde más suave */
-      --secondary-color: #1565C0; /* Azul claro */
-      --danger-color: #C62828; /* Rojo suave */
+      --primary-color: #2E7D32;
+      --secondary-color: #1565C0;
+      --danger-color: #C62828;
       --text-color: #333;
       --light-bg: #f5f5f5;
       --white: #ffffff;
@@ -124,17 +124,16 @@
     }
 
     #ttsButton {
-      background-color: #6A1B9A; /* Morado para TTS */
+      background-color: #6A1B9A;
       color: white;
     }
 
-    /* Añadir iconos a los nuevos botones */
     #ttsButton::before {
       content: "🔊";
     }
 
     button {
-      padding: 10px 5px; /* Ajuste horizontal reducido */
+      padding: 10px 5px;
       font-size: 16px;
       border: none;
       border-radius: 6px;
@@ -145,9 +144,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      white-space: nowrap; /* Evita salto de línea */
-      overflow: hidden; /* Oculta texto que sobresale */
-      text-overflow: ellipsis; /* Añade puntos si el texto es muy largo */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     
     button:active {
@@ -157,7 +156,7 @@
     #sendButton {
       background-color: var(--primary-color);
       color: white;
-      width: 90px; /* Ancho ligeramente mayor */
+      width: 90px;
       flex-shrink: 0;
     }
     
@@ -188,14 +187,12 @@
       box-sizing: border-box;
     }
     
-    /* Mejoras de accesibilidad */
     button:focus, input:focus {
       outline: 3px solid #FFD600;
     }
     
-    /* Iconos para mayor claridad */
     button::before {
-      margin-right: 5px; /* Reducido ligeramente */
+      margin-right: 5px;
       font-family: 'Arial';
     }
     
@@ -238,17 +235,126 @@
       50% { opacity: 0.7; }
       100% { opacity: 1; }
     }
+
+    #goalModal {
+      display: none; 
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); 
+      z-index: 1000; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #goalModalContent {
+      background-color: var(--white);
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    #goalModal h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    #modalGoalInput {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+
+    #setGoalButton {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 25px;
+      font-size: 18px;
+      border-radius: 6px;
+      width: 100%;
+      margin: 0 auto;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    #setGoalButton:hover {
+      background-color: #1B5E20;
+    }
+
+    #setGoalButton::before {
+      content: "✓";
+      margin-right: 8px;
+      font-family: 'Arial';
+    }
+
+    
+    #goalDisplayArea {
+      display: none;
+      background-color: var(--white);
+      padding: 10px 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    #goalDisplayText {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-color);
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #changeGoalButton {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 8px 12px;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    #changeGoalButton::before {
+      content: "✎";
+      margin-right: 8px;
+      font-family: 'Arial';
+    }
+
   </style>
 </head>
 <body>
   <h1>PITEChat</h1>
-  
-  <div id="goalContainer">
-    <label for="userGoal">Objetivo actual:</label>
-    <input type="text" id="userGoal" placeholder="Escribe tu objetivo aquí...">
-    <button id="resolveGoalButton">
-      Confirmar objetivo resuelto
-    </button>
+
+  <div id="goalDisplayArea">
+    <span id="goalDisplayText"></span>
+    <button id="changeGoalButton">Cambiar Objetivo</button>
+  </div>
+
+  <div id="goalModal">
+    <div id="goalModalContent">
+      <h2>¿En qué te puedo ayudar hoy?</h2>
+      <input type="text" id="modalGoalInput" placeholder="Escribe tu objetivo (p.ej. comprar un billete de avión)">
+      <button id="setGoalButton">Empezar</button>
+    </div>
   </div>
 
   <div id="chatbox"></div>

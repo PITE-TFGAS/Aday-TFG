@@ -28,6 +28,7 @@ import { marked } from 'marked';
  */
 class Chatbot {
   private API_KEY: string;
+  private API_MODEL: string;
   private AI_CLIENT: GeminiAIClient;
   private userSettings: Record<string, string>;
   private chatbox: HTMLDivElement;
@@ -41,16 +42,18 @@ class Chatbot {
    * Initializes the Chatbot instance with the provided API key and user settings.
    * 
    * @param apiKey - The API key for the Gemini AI client.
+   * @param apiModel - The API model for the Gemini AI client.
    * @param userSettings - An object containing user-specific settings for the chatbot.
    * 
    * @remarks
    * This constructor sets up the necessary DOM elements, loads messages from local storage,
    * and sets up event listeners for user interactions.
    */
-  constructor(apiKey: string, userSettings: Record<string, string>) {
+  constructor(apiKey: string, apiModel: string, userSettings: Record<string, string>) {
     this.API_KEY = apiKey;
+    this.API_MODEL = apiModel;
     this.userSettings = userSettings;
-    this.AI_CLIENT = new GeminiAIClient(this.API_KEY, 10, this.userSettings);
+    this.AI_CLIENT = new GeminiAIClient(this.API_KEY, this.API_MODEL, 10, this.userSettings);
 
     this.initializeDOMElements();
     this.loadMessages();
@@ -81,7 +84,7 @@ class Chatbot {
   /**
    * Handles TTS button click to read the last bot message aloud
    */
-  private handleTTS(): void {
+  public handleTTS(): void {
     this.ttsEnabled = !this.ttsEnabled;
     this.ttsButton.classList.toggle('active-feature');
 
@@ -118,12 +121,12 @@ class Chatbot {
 
   private removeMarkdown(text: string): string {
     return text
-      .replace(/\*\*(.*?)\*\*/g, '$1')  // Negritas
-      .replace(/\*(.*?)\*/g, '$1')       // Cursivas
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Enlaces
-      .replace(/#+\s*/g, '')             // Encabezados
-      .replace(/`{1,3}(.*?)`{1,3}/g, '$1') // Código
-      .replace(/\n{2,}/g, '\n')         // Saltos de línea múltiples
+      .replace(/\*\*(.*?)\*\*/g, '$1')  
+      .replace(/\*(.*?)\*/g, '$1')       
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1') 
+      .replace(/#+\s*/g, '')             
+      .replace(/`{1,3}(.*?)`{1,3}/g, '$1') 
+      .replace(/\n{2,}/g, '\n')         
       .trim();
   }
 
@@ -234,7 +237,7 @@ class Chatbot {
    * It retrieves the user's goal and current tab URL, sends the message to the AI client,
    * and appends both the user's message and AI's response to the chatbox.
    */
-  private async handleSendMessage(message?: string): Promise<void> {
+  public async handleSendMessage(message?: string): Promise<void> {
     const userMessage = message || this.userInput.value.trim();
     if (!userMessage) return;
 
@@ -282,7 +285,7 @@ class Chatbot {
    * This method clears the inner HTML of the chatbox and resets the chat history in the AI client.
    * It also removes any stored messages from local storage using the Chrome extension API.
    */
-  private resetChat(chatbox: HTMLDivElement): void {
+  public resetChat(chatbox: HTMLDivElement): void {
     chatbox.innerHTML = "";
     this.AI_CLIENT.clearChatHistory();
 

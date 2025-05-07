@@ -25,22 +25,23 @@ class GeminiAIClient {
   private historyManager: ChatHistoryManager;
   private instructions: string;
   private userSettings: Record<string, string>;
-
+  private modelName: string; // Para guardar el nombre del modelo
 
   /**
    * Constructs an instance of the GeminiAIClient class.
    *
    * @param apiKey - The API key used to authenticate with the Google Generative AI service.
+   * @param modelName - The name of the model to be used.
    * @param maxMessages - The maximum number of messages to retain in the chat history. Defaults to 10.
    * @param userSettings - A record of user-specific settings, where keys are setting names and values are their corresponding values.
    */
-  constructor(apiKey: string, maxMessages: number = 10, userSettings: Record<string, string>) {
+  constructor(apiKey: string, modelName: string, maxMessages: number = 10, userSettings: Record<string, string>) {
     this.genAI = new GoogleGenerativeAI(apiKey);
+    this.modelName = modelName; // Guardar el nombre del modelo
     this.historyManager = new ChatHistoryManager(maxMessages);
     this.userSettings = userSettings;
     this.instructions = this.generateInstructions();
   }
-
 
   /**
    * Generates a set of instructions for the chatbot based on user settings.
@@ -65,12 +66,12 @@ class GeminiAIClient {
     const prefersDetailed = this.userSettings.tecnico === 'detalladas';
   
     const rules: string[] = [
-      "Eres PITEChat: paciente y empático. Tu voz es cálida, como un familiar explicando algo por teléfono. No incluyas pensamientos internos.",
+      "Eres PITEChat, un asistente virtual para ordenador paciente y empático. Tu voz es cálida, como un familiar explicando algo por teléfono. No incluyas pensamientos internos.",
       usesInternet
         ? "Usa términos técnicos (campo de texto, click, etc.)."
         : "Evita jerga técnica; describe lo esencial.",
       needsConfirmations
-        ? "Confirma cada paso: '¿Entiendes?' o '¿Continuamos?'."
+        ? "Antes de enviar el mensaje, escríbele al usuario '¿Entiendes?' o '¿Continuamos?'."
         : "No confirmes a menos que el usuario esté perdido.",
       helpIdentifying
         ? "Describe ubicación visual: color, posición, forma."
@@ -84,16 +85,14 @@ class GeminiAIClient {
     return rules.map((r, i) => `${i + 1}. ${r}`).join("\n") + "\n";
   }
 
-
   /**
    * Retrieves the generative model configuration for the Gemini AI client.
    *
    * @returns A promise that resolves to the generative model object with the specified configuration.
    */
   private async getModel() {
-    return this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    return this.genAI.getGenerativeModel({ model: this.modelName });
   }
-
 
   /**
    * Sends a message to the Gemini AI model and retrieves the generated response.
@@ -172,7 +171,6 @@ class GeminiAIClient {
   private addContextFromUrl(data: any, currentUrl: string, prompt: string): string {
     const jsonUrls = Object.keys(data);
   
-    // Encuentra la URL más relevante
     const relevantUrl = findRelevantUrl(currentUrl, jsonUrls);
   
     if (!relevantUrl) {

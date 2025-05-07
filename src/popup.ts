@@ -38,6 +38,38 @@ let chatbot: Chatbot;
 function setupChatbot() {
   document.addEventListener("DOMContentLoaded", () => {
     const settingsButton = document.getElementById("settingsButton") as HTMLButtonElement;
+    const goalModal = document.getElementById("goalModal") as HTMLDivElement;
+    const modalGoalInput = document.getElementById("modalGoalInput") as HTMLInputElement;
+    const setGoalButton = document.getElementById("setGoalButton") as HTMLButtonElement;
+    const goalDisplayArea = document.getElementById("goalDisplayArea") as HTMLDivElement;
+    const goalDisplayText = document.getElementById("goalDisplayText") as HTMLSpanElement;
+    const changeGoalButton = document.getElementById("changeGoalButton") as HTMLButtonElement;
+    let currentGoal = "";
+
+    const showModal = () => {
+      modalGoalInput.value = currentGoal;
+      goalModal.style.display = 'flex';
+      goalDisplayArea.style.display = 'none';
+      modalGoalInput.focus();
+    };
+
+    const hideModal = () => {
+      goalModal.style.display = 'none';
+      if (currentGoal) {
+        goalDisplayArea.style.display = 'flex';
+      }
+    };
+
+    const updateGoalDisplay = (goal: string) => {
+      currentGoal = goal;
+      goalDisplayText.textContent = goal || "Objetivo no definido";
+      if (goal) {
+        goalDisplayArea.style.display = 'flex';
+      } else {
+        goalDisplayArea.style.display = 'none';
+      }
+    };
+
 
     if (settingsButton) {
       settingsButton.addEventListener("click", () => {
@@ -51,43 +83,76 @@ function setupChatbot() {
       confirmar: "si",
       ayuda: "si",
     };
+    const defaultApiKey = "";
+    const defaultApiModel = "gemini-1.5-flash-latest";
 
-    chrome.storage.local.get("userSettings", (result) => {
-      const API_KEY: string = "AIzaSyCGnpOkebWUd1hLjc-ToU1FFS66veG3yMU";
-      const userSettings = result.userSettings || defaultSettings;
+    Promise.all([
+      new Promise<{ settings: Record<string, string>, fromStorage: boolean }>(resolve =>
+        chrome.storage.local.get("userSettings", result => {
+          const settingsExist = !!result.userSettings;
+          resolve({ settings: result.userSettings || defaultSettings, fromStorage: settingsExist });
+        })
+      ),
+      new Promise<string>(resolve =>
+        chrome.storage.local.get("userGoal", result => resolve(result.userGoal || ""))
+      ),
+      new Promise<string>(resolve =>
+        chrome.storage.local.get("geminiApiKey", result => resolve(result.geminiApiKey || defaultApiKey))
+      ),
+      new Promise<string>(resolve =>
+        chrome.storage.local.get("geminiApiModel", result => resolve(result.geminiApiModel || defaultApiModel))
+      )
+    ]).then(([{ settings: userSettings, fromStorage: settingsFromStorage }, initialGoal, apiKey, apiModel]) => {
 
-      chatbot = new Chatbot(API_KEY, userSettings);
-      chatbot.appendMessage("Asistente",`¡Hola!, soy tu asistente virtual y voy a ayudarte en todo lo que pueda.\nPara empezar, escribe tu objetivo en el cuadro de texto de arriba, una vez lo hayas escrito puedes hablar conmigo utilizando el cuadro de texto y presionando la tecla Enter o el botón de enviar.\nUna vez hayas logrado tu objetivo, puedes presionar el botón de resolver objetivo para que yo lo elimine y puedas escribir otro objetivo.\nEspero que te ayude en todo lo que necesites. ¡Vamos a empezar!`);
-
-      if (!result.userSettings) {
-        console.warn("No se encontraron ajustes. Redirigiendo a la página de configuración...");
+      if (!settingsFromStorage) {
+        console.warn("No se encontraron ajustes guardados. Redirigiendo a la página de configuración...");
         window.location.href = "settings.html";
+        return; 
       }
 
-    });
+      if (!apiKey) {
+        alert("API Key de Gemini no configurada. Por favor, configúrala en la página de Ajustes.");
+        console.warn("API Key de Gemini no configurada. Redirigiendo a la página de configuración...");
+        window.location.href = "settings.html";
+        return;
+      }
 
-    const userGoalInput = document.getElementById("userGoal") as HTMLInputElement;
-    const resolveGoalButton = document.getElementById("resolveGoalButton") as HTMLButtonElement;
+      chatbot = new Chatbot(apiKey, apiModel, userSettings);
 
-    chrome.storage.local.get("userGoal", (result) => {
-      userGoalInput.value = result.userGoal || "";
-    });
+      currentGoal = initialGoal;
+      updateGoalDisplay(currentGoal); 
 
-    userGoalInput.addEventListener("input", () => {
-      const userGoal = userGoalInput.value.trim();
-      chrome.storage.local.set({ userGoal });
-    });
+      if (!currentGoal) {
+        showModal();
+        chatbot.appendMessage("Asistente", `¡Hola! soy tu Asistente virtual y estoy aquí para ayudarte ^^. Dime, ¿en qué necesitas ayuda?.`);
+      } else {
+        hideModal();
+      }
 
-    resolveGoalButton.addEventListener("click", () => {
-      chrome.storage.local.set({ userGoal: "" }, () => {
-        userGoalInput.value = "";
-        if (chatbot) {
-          chatbot.handleGoalResolved();
+      setGoalButton.addEventListener("click", () => {
+        const newGoal = modalGoalInput.value.trim();
+        if (newGoal) {
+          chrome.storage.local.set({ userGoal: newGoal }, () => {
+            updateGoalDisplay(newGoal);
+            hideModal();
+          });
         } else {
-          console.error("Error: El chatbot no está inicializado.");
+          modalGoalInput.style.borderColor = 'red';
+          setTimeout(() => { modalGoalInput.style.borderColor = '#ddd'; }, 1000);
         }
       });
+      modalGoalInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          setGoalButton.click();
+        }
+      });
+      changeGoalButton.addEventListener("click", showModal);
+
+    }).catch(error => {
+      console.error("Error al cargar datos iniciales:", error);
+      alert("Error al cargar configuración. Intenta recargar la extensión.");
     });
+
   });
 }
 

@@ -6,9 +6,9 @@
   <title>Ajustes del Chat</title>
   <style>
     :root {
-      --primary-color: #2E7D32; /* Verde principal */
-      --secondary-color: #1565C0; /* Azul */
-      --danger-color: #C62828; /* Rojo */
+      --primary-color: #2E7D32;
+      --secondary-color: #1565C0; 
+      --danger-color: #C62828; 
       --text-color: #333;
       --light-bg: #f5f5f5;
       --white: #ffffff;
@@ -19,21 +19,21 @@
     body {
       font-family: 'Arial', sans-serif;
       width: 500px;
-      height: 600px; /* Altura fija */
+      height: 600px;
       margin: 0;
       padding: 15px;
-      font-size: 18px; /* Reducido ligeramente */
+      font-size: 18px;
       background-color: var(--light-bg);
       color: var(--text-color);
-      line-height: 1.4; /* Más compacto */
+      line-height: 1.4; 
       box-sizing: border-box;
-      overflow: hidden; /* Elimina el scroll */
+      overflow: hidden; 
       display: flex;
       flex-direction: column;
     }
     
     h1 {
-      font-size: 22px; /* Un poco más pequeño */
+      font-size: 22px; 
       color: var(--primary-color);
       text-align: center;
       margin: 0 0 5px 0;
@@ -44,9 +44,9 @@
     #settingsForm {
       display: flex;
       flex-direction: column;
-      gap: 12px; /* Espacio reducido */
+      gap: 12px; 
       flex-grow: 1;
-      overflow-y: auto; /* Scroll interno solo si es necesario */
+      overflow-y: auto;
     }
     
     .question {
@@ -61,18 +61,18 @@
       display: block;
       font-weight: bold;
       margin-bottom: 10px;
-      font-size: 17px; /* Reducido ligeramente */
+      font-size: 17px;
     }
     
     .buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px; /* Espacio reducido */
+      gap: 8px;
     }
     
     .option-button {
-      padding: 10px 5px; /* Más compacto */
-      font-size: 16px; /* Reducido ligeramente */
+      padding: 10px 5px; 
+      font-size: 16px; 
       border: 2px solid #ddd;
       border-radius: var(--border-radius);
       cursor: pointer;
@@ -83,7 +83,7 @@
       justify-content: center;
       text-align: center;
       word-break: break-word;
-      min-height: 44px; /* Altura táctil mínima */
+      min-height: 44px; 
     }
     
     .option-button:hover {
@@ -111,7 +111,6 @@
       flex-shrink: 0;
     }
     
-    /* Mejoras de accesibilidad */
     button:focus {
       outline: 3px solid #FFD600;
     }
@@ -120,10 +119,127 @@
       content: "✓";
       margin-right: 8px;
     }
+
+    #apiConfigButton {
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      margin-bottom: 20px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      font-weight: bold;
+    }
+    #apiConfigButton::before {
+      content: "🔑";
+      margin-right: 8px;
+    }
+
+    .modal {
+      display: none; 
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); 
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      padding: 25px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .modal-content label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .modal-content input[type="text"],
+    .modal-content select {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .modal-buttons button {
+       padding: 10px 15px;
+       font-size: 16px;
+       min-width: 100px;
+    }
+    #saveApiConfigButton {
+      background-color: var(--primary-color);
+      color: white;
+    }
+     #saveApiConfigButton::before { content: "✓"; margin-right: 5px;}
+
+    #cancelApiConfigButton {
+      background-color: #ccc;
+      color: var(--text-color);
+    }
+     #cancelApiConfigButton::before { content: "✗"; margin-right: 5px;}
   </style>
 </head>
 <body>
   <h1>Ajustes del Chat</h1>
+  
+  <button id="apiConfigButton">Configurar API de Gemini</button>
+  
+  <div id="apiConfigModal" class="modal">
+    <div class="modal-content">
+      <h2>Configuración de API de Gemini</h2>
+      <div>
+        <label for="modalApiKeyInput">API Key:</label>
+        <input type="text" id="modalApiKeyInput" placeholder="Introduce tu API Key de Gemini">
+      </div>
+      <div>
+        <label for="modalApiModelSelect">Modelo:</label>
+        <select id="modalApiModelSelect">
+          <option value="gemini-1.5-flash-latest">Gemini 1.5 Flash (Recomendado)</option>
+          <option value="gemini-1.5-pro-latest">Gemini 1.5 Pro</option>
+          <!-- Add more models here if needed -->
+        </select>
+      </div>
+      <div class="modal-buttons">
+        <button id="cancelApiConfigButton">Cancelar</button>
+        <button id="saveApiConfigButton">Guardar API</button>
+      </div>
+    </div>
+  </div>
+
   <form id="settingsForm">
     <div class="question">
       <label>¿Usas internet con frecuencia?</label>

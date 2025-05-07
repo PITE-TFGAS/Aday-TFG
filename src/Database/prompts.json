@@ -503,5 +503,344 @@
       }
     ],
     "estrategia": "filtrar"
+  },
+  "https://titsa.com": {
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "logotipo", "marca", "inicio", "cabecera", "enlace inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Planificador de viajes",
+        "tipo": "formulario",
+        "descripcion": "Sección interactiva que permite planificar el viaje ingresando el origen (Desde), dirección de origen, el destino (A) y la dirección de destino. Se utiliza para saber que guagua coger desde un punto a otro. Incluye campos para especificar la ubicación de partida y de llegada, así como un botón 'Buscar' para consultar las líneas disponibles.",
+        "ubicacion": "Zona central superior, debajo del encabezado.",
+        "apariencia": "En el encabezado del formulario hay una lupa con un autobut. Al final del formulario hay un botón de 'Buscar' en color verde que resalta la acción.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["planificador", "origen", "destino", "buscar", "rutas", "viaje"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Líneas y horarios",
+        "tipo": "imagen interactiva",
+        "descripcion": "Área que presenta información sobre las distintas líneas de guagua y sus horarios, permitiendo a los usuarios consultar rutas, frecuencias y tiempos de salida de un guagua o línea concreta.",
+        "ubicacion": "Zona media de la página.",
+        "apariencia": "Imágen cuadrada cuyo pie de foto es 'Líneas y horarios', en la foto aparece un botón rojo que pone STOP como el que se usa para parar el guagua.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["líneas", "horarios", "rutas", "autobús", "guagua", "frecuencia", "salidas", "consultar"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Líneas de aeropuertos",
+        "tipo": "imagen interactiva",
+        "descripcion": "Área dedicada a mostrar las rutas y horarios de las guaguas que conectan con los aeropuertos, informando a los viajeros sobre las distintas líneas que salen o van hacia el aeropuerto.",
+        "ubicacion": "Zona media de la página, integrada junto a la información de líneas.",
+        "apariencia": "Imágen cuadrada cuyo pie de foto es 'Líneas de aeropuertos', en la foto se ven aviones aparcados.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["aeropuertos", "líneas", "rutas", "horarios", "conexión", "vuelo"],
+        "prioridad": 4
+      },
+      {
+        "nombre": "Tarifas",
+        "tipo": "imagen interactiva",
+        "descripcion": "Área que presenta las tarifas de las diferentes líneas de guaguas, mostrando precios según el tipo de bono utilizado.",
+        "ubicacion": "Zona inferior central de la página.",
+        "apariencia": "Imágen cuadrada cuyo pie de foto es 'Tarifas', en la foto aparece la máquina que se usa para pagar en un guagua.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["tarifas", "precios", "costos"],
+        "prioridad": 5
+      },
+      {
+        "nombre": "Títulos de pago",
+        "tipo": "imagen interactiva",
+        "descripcion": "Área que detalla los distintos tipos de bonos que posee Titsa.",
+        "ubicacion": "Zona inferior central de la página.",
+        "apariencia": "Imágen cuadrada cuyo pie de foto es 'Títulos de pago', en la foto aparecen 3 tarjetas de titsa.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["pagos", "títulos", "tarjetas", "bono", "abono"],
+        "prioridad": 6
+      },
+      {
+        "nombre": "Avisos última hora",
+        "tipo": "imagen interactiva",
+        "descripcion": "Área destinada a comunicar avisos de última hora y actualizaciones sobre el servicio, alertando a los usuarios sobre cambios o imprevistos en las operaciones.",
+        "ubicacion": "Zona central inferior de la página.",
+        "apariencia": "Imágen cuadrada cuyo pie de foto es 'Avisos última hora', aparece un megáfono en la foto.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["avisos", "última hora", "actualizaciones", "alertas"],
+        "prioridad": 7
+      },
+      {
+        "nombre": "Tenerife en Guagua",
+        "tipo": "sección promocional",
+        "descripcion": "Espacio promocional que invita a descubrir Tenerife utilizando el servicio de autobús, resaltando las líneas de guagua de Titsa.",
+        "ubicacion": "Zona inferior del contenido promocional principal.",
+        "apariencia": "Imágen cuadrada cuyo pie de foto es 'Tenerife en Guagua', la imagen es una playa de tenerife.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["Tenerife", "guagua", "autobús", "turismo", "promoción"],
+        "prioridad": 8
+      },
+      {
+        "nombre": "Puntos de venta y recarga de tarjetas ten+",
+        "tipo": "imagen interactiva",
+        "descripcion": "Área que proporciona información sobre los puntos de venta y lugares donde se pueden recargar las tarjetas ten+, facilitando el acceso a este servicio.",
+        "ubicacion": "Zona inferior, habitualmente en el pie de página o en un apartado lateral.",
+        "apariencia": "Diseño sencillo y claro de color verde, con letras blancas y un ícono que pone ten+ dentro de un marcador azul.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["puntos de venta", "recarga", "tarjeta ten+", "información", "servicio", "dinero"],
+        "prioridad": 9
+      }
+    ],
+    "estrategia": "filtrar"
+  },
+  "https://titsa.com/index.php/tus-guaguas/lineas-y-horarios/": {
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Listado de líneas",
+        "tipo": "tabla interactiva",
+        "descripcion": "Componente que muestra de forma general todas las líneas de autobús disponibles. Aquí el usuario puede elegir la línea de guagua que quiere mirar o buscar más haciendo clic en las flechitas que hay a la izquierda y derecha. Puede pinchar en cualquier línea se abrirá una nueva página con información detallada sobre esa línea.",
+        "ubicacion": "Zona superior central de la página.",
+        "apariencia": "Diseño en formato de lista, cada línea está dentro de un cuadrado redondo gris (o negro si está seleccionado) que posee el número de la línea.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["listado", "tabla", "líneas", "horarios", "rutas", "autobús"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Selector de línea",
+        "tipo": "Lista",
+        "descripcion": "Hacer clic en este elemento hace que se abra un listado de las líneas disponibles, mostrando el nombre, origen y destino (Por ejemplo: Línea 10 - SANTA CRUZ - AEROPUERTO DEL SUR TFS)",
+        "ubicacion": "Ubicado bajo el listado de líneas.",
+        "apariencia": "Menú de navegación con bordes redondeados, pone el nombre de la línea actual, destino y origen. Fondo blanco con letras negras.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["selector", "pestañas"],
+        "prioridad": 5
+      },
+      {
+        "nombre": "Horarios",
+        "tipo": "Texto",
+        "descripcion": "Muestra información sobre los horarios de salida de las guaguas tanto en días laborales como Sábados, Domingos y Festivos.",
+        "ubicacion": "Ubicado bajo el listado y selector de líneas.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["horarios", "laborables", "festivos"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Trayecto",
+        "tipo": "Bloque interactivo",
+        "descripcion": "Muestra el nombre de las paradas de ese trayecto, junto al número de la parada. Tiene la opción arriba a la derecha de cambiar el sentido del trayecto (Es un botón gris oscuro con letras blancas que ponen 'Cambiar el sentido'). El usuario puede hacer clic en una de las paradas para ver cuanto falta hasta que llegue la próxima guagua.",
+        "ubicacion": "Ubicado a la izquierda de la página, bajo el Logo de Titsa.",
+        "apariencia": "Bloque rectangular, arriba del todo pone el número de la línea, al lado el bóton de 'Cambiar el sentido', debajo el trayecto desde la primera parada hasta la última. El bloque tiene distintas tonalidades de gris.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["paradas", "trayecto"],
+        "prioridad": 4
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://titsa.com/index.php/tenerife-en-guagua/lineas-de-aeropuertos": {
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Listado de aeropuertos",
+        "tipo": "imagen interactiva",
+        "descripcion": "2 imágenes, una del Aeropuerto del Norte y otra del Aeropuerto del Sur. Bajo las imágenes hay letras verdes con el nombre del aeropuerto y un botón cuadrado con un +. Al hacer clic en cualquiera de esos elementos, se abrirá una nueva página con información detallada sobre las línea de guaguas que conectan con ese aeropuerto.",
+        "ubicacion": "Zona central de la página.",
+        "apariencia": "Imágenes de aviones en esos aeropuertos.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 2
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://titsa.com/index.php/tenerife-en-guagua/lineas-de-aeropuertos/aeropuerto-tenerife-sur": {
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Listado de líneas",
+        "tipo": "tabla interactiva",
+        "descripcion": "Componente que muestra de forma general todas las líneas de autobús disponibles que van a ese aeropuerto. Aquí el usuario puede elegir la línea de guagua que quiere mirar. Puede pinchar en cualquier línea y se abrirá una nueva página con información detallada sobre esa línea. Puede ver más líneas con las flechitas que aparecen a la derecha e izquierda de la lista.",
+        "ubicacion": "Zona superior central de la página.",
+        "apariencia": "Diseño en formato de lista, cada línea está dentro de un cuadrado redondo gris (o negro si está seleccionado) que posee el número de la línea.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["listado", "tabla", "líneas", "horarios", "rutas", "autobús"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Selector de línea",
+        "tipo": "Lista",
+        "descripcion": "Hacer clic en este elemento hace que se abra un listado de las líneas disponibles en ese aeropuerto, mostrando el nombre, origen y destino (Por ejemplo: Línea 10 - SANTA CRUZ - AEROPUERTO DEL SUR TFS)",
+        "ubicacion": "Ubicado bajo el listado de líneas.",
+        "apariencia": "Menú de navegación con bordes redondeados, pone el nombre de la línea actual, destino y origen. Fondo blanco con letras negras.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["selector", "pestañas"],
+        "prioridad": 5
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://titsa.com/index.php/tenerife-en-guagua/lineas-de-aeropuertos/aeropuerto-tenerife-norte": {
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Listado de líneas",
+        "tipo": "tabla interactiva",
+        "descripcion": "Componente que muestra de forma general todas las líneas de autobús disponibles que van a ese aeropuerto. Aquí el usuario puede elegir la línea de guagua que quiere mirar. Puede pinchar en cualquier línea y se abrirá una nueva página con información detallada sobre esa línea. Puede ver más líneas con las flechitas que aparecen a la derecha e izquierda de la lista.",
+        "ubicacion": "Zona superior central de la página.",
+        "apariencia": "Diseño en formato de lista, cada línea está dentro de un cuadrado redondo gris (o negro si está seleccionado) que posee el número de la línea.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["listado", "tabla", "líneas", "horarios", "rutas", "autobús"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Selector de línea",
+        "tipo": "Lista",
+        "descripcion": "Hacer clic en este elemento hace que se abra un listado de las líneas disponibles en ese aeropuerto, mostrando el nombre, origen y destino (Por ejemplo: Línea 20 - SANTA CRUZ - LA LAGUNA - AEROPUERTO NORTE)",
+        "ubicacion": "Ubicado bajo el listado de líneas.",
+        "apariencia": "Menú de navegación con bordes redondeados, pone el nombre de la línea actual, destino y origen. Fondo blanco con letras negras.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["selector", "pestañas"],
+        "prioridad": 3
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://titsa.com/index.php/tus-guaguas/billetes-y-tarifas/tarifas-vigentes": {
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Selector de línea",
+        "tipo": "Lista",
+        "descripcion": "Hacer clic en este elemento hace que se abra un listado de las líneas disponibles, mostrando el nombre, origen y destino (Por ejemplo: Línea 20 - SANTA CRUZ - LA LAGUNA - AEROPUERTO NORTE)",
+        "ubicacion": "Ubicado en la zona central superior de la página.",
+        "apariencia": "Menú de navegación con bordes redondeados, pone el nombre de la línea actual, destino y origen. Fondo blanco con letras negras.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["selector", "pestañas"],
+        "prioridad": 2
+      },
+      {
+        "nombre": "Trayecto",
+        "tipo": "Bloque interactivo",
+        "descripcion": "Muestra el nombre de las paradas de ese trayecto. Tiene la opción arriba a la derecha de cambiar el sentido del trayecto (Es un botón gris oscuro con letras blancas que ponen 'Cambiar el sentido'). El usuario puede hacer clic en la parada de origen y en la de destino para que la página calcule el coste del trayecto.",
+        "ubicacion": "Ubicado debajo del selector.",
+        "apariencia": "Bloque rectangular, arriba del todo pone el número de la línea, al lado el bóton de 'Cambiar el sentido', debajo el trayecto desde la primera parada hasta la última. El bloque tiene distintas tonalidades de gris.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["paradas", "trayecto"],
+        "prioridad": 3
+      },
+      {
+        "nombre": "Costes",
+        "tipo": "Texto",
+        "descripcion": "Muestra información sobre el coste que cuesta utilizar la línea desde el origen y destino seleccionado. Hay distintos precios según el tipo de bono utilizado.",
+        "ubicacion": "Ubicado bajo el bloque de Trayecto.",
+        "apariencia": "Íconos de los distintos tipos de bonos que posee Titsa, justo debajo del ícono sale el nombre del bono y el precio del trayecto.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["Coste", "dinero", "precio", "bono"],
+        "prioridad": 4
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://titsa.com/index.php/tus-guaguas/billetes-y-tarifas/billetes-y-titulos-de-pago": {
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Billetes y títulos de pago",
+        "tipo": "sección informativa",
+        "descripcion": "Muestra información sobre los distintos tipos de billetes y títulos de Titsa, junto a un apartado de Características y Validez.",
+        "ubicacion": "Ubicado en el centro de la página.",
+        "apariencia": "Imágenes de los distintos tipos de bonos que posee Titsa. Estan separados por un marco gris claro.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["Billetes", "Título", "Abono", "bono"],
+        "prioridad": 2
+      }
+    ],
+    "estrategia": "enviar_todo"
+  },
+  "https://titsa.com/index.php/atencion-al-cliente/puntos-de-venta-y-recarga": { 
+    "elementos": [
+      {
+        "nombre": "Logo principal",
+        "tipo": "imagen",
+        "descripcion": "El logotipo principal de TITSA se muestra en la esquina superior izquierda del encabezado y actúa como enlace para volver a la página principal. Su diseño incorpora la imagen y el eslogan 'titsa donde tú vas', reforzando la identidad de la marca.",
+        "ubicacion": "Esquina superior izquierda del encabezado.",
+        "apariencia": "El logo de TITSA con las letras 'donde tú vas'.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion", "apariencia"],
+        "keywords": ["logo", "TITSA", "imagen", "marca", "inicio"],
+        "prioridad": 1
+      },
+      {
+        "nombre": "Mapa interactivo",
+        "tipo": "mapa",
+        "descripcion": "Muestra marcadores en la isla de tenerife con todos los puntos donde recargar los bonos o tarjetas de Titsa. Puede hacer zoom con la rueda central del ratón para acercar el mapa. Si hace clic en un marcador, se abrirá una ventana emergente con información sobre el punto de venta.",
+        "ubicacion": "Ubicado en el centro de la página.",
+        "apariencia": "Mapa de Google maps, con marcadores redondos que ponen 'ten+' y una mano estirada.",
+        "incluir": ["nombre", "tipo", "descripcion", "ubicacion"],
+        "keywords": ["Billetes", "Título", "Abono", "bono", "recarga", "puntos de venta"],
+        "prioridad": 2
+      }
+    ],
+    "estrategia": "enviar_todo"
   }
 }

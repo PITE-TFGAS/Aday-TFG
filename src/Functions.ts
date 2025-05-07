@@ -38,10 +38,8 @@ const spanishStemmer = (word: string): string => {
   
   word = word.toLowerCase().trim();
   
-  // Paso 1: Remover acentos y caracteres especiales
   word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   
-  // Paso 2: Stemming básico (reglas comunes en español)
   const suffixes = [
     /(amiento|imientos|amiento|iciones|adoras|adores|ancias|ismos|ables|ibles|istas|adora|adores|ancias|ismos|ables|ibles|istas|ante|anza|ario|eros|endo|eras|ería|ese|és|eza|ezas|ico|ica|icos|icas|idad|idas|idos|iendo|iera|iero|ión|ismo|ista|ivo|ivos|izar|logía|mente|miento|ncia|ndo|nza|or|ora|orio|osa|oso|otas|ote|otos|sion|tad|tor|tora|tud|ura)$/,
     /(ar|er|ir|se|en|es|as|ís|an|in|do|ndo|ble|nte)$/,
