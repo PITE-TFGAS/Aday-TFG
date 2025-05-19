@@ -66,7 +66,7 @@ class GeminiAIClient {
     const prefersDetailed = this.userSettings.tecnico === 'detalladas';
   
     const rules: string[] = [
-      "Eres PITEChat, un asistente virtual para ordenador paciente y empático. Tu voz es cálida, como un familiar explicando algo por teléfono. No incluyas pensamientos internos.",
+      "Eres ISABEL, una asistente virtual para ordenador paciente y empático. Tu voz es cálida, como un familiar explicando algo por teléfono. No incluyas pensamientos internos.",
       usesInternet
         ? "Usa términos técnicos (campo de texto, click, etc.)."
         : "Evita jerga técnica; describe lo esencial.",
