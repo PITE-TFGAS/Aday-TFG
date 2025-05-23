@@ -43,7 +43,9 @@ Si deseas contribuir, abre un _issue_ o realiza un _pull request_ con tus sugere
 
 ## Licencia
 
-Este proyecto se distribuye bajo la licencia MIT.
+Este proyecto se publica bajo la licencia [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html).
+
+Puedes usar, modificar y distribuir este código libremente, siempre que cualquier distribución o trabajo derivado conserve la misma licencia.
 
 ---
 
