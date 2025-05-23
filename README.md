@@ -1,49 +1,50 @@
-# My Webpack Project
+# Extensión Gemini para Navegadores Chromium
 
-## Overview
-This project is a TypeScript application that utilizes Webpack for the build process. It is designed to demonstrate the integration of TypeScript with Webpack, providing a structured approach to developing modern web applications.
+Este repositorio contiene una extensión de navegador desarrollada en **TypeScript** que actúa como asistente inteligente para la navegación web, especialmente diseñada para facilitar el uso de páginas complejas a personas mayores. Funciona mediante la integración con **modelos Gemini de Google**, a los que se accede mediante una API Key personalizada.
 
-## Project Structure
-```
-my-webpack-project
-├── src
-│   ├── index.ts          # Entry point of the application
-│   └── types
-│       └── index.ts      # Type definitions and interfaces
-├── package.json          # NPM configuration and scripts
-├── tsconfig.json         # TypeScript compiler options
-├── webpack.config.js     # Webpack configuration
-└── README.md             # Project documentation
-```
+La extensión analiza el contenido de las páginas web y genera respuestas guiadas paso a paso, adaptadas a las necesidades del usuario, aprovechando las capacidades de generación de lenguaje natural de Gemini.
 
-## Setup Instructions
+## Instalación
 
-1. **Clone the repository:**
-   ```
-   git clone <repository-url>
-   cd my-webpack-project
-   ```
+1. **Descarga el repositorio**  
+   Puedes clonar este repositorio o descargarlo como archivo ZIP y descomprimirlo en tu equipo.
 
-2. **Install dependencies:**
-   ```
+2. **Instala las dependencias**  
+   Abre una terminal en la carpeta del proyecto y ejecuta:
+   ```bash
    npm install
    ```
 
-3. **Build the project:**
-   ```
-   npm run compile
-   ```
-
-4. **Run the application:**
-   ```
-   npm start
+3. **Compila la extensión**  
+   Para construir la extensión, ejecuta:
+   ```bash
+   npm run build
    ```
 
-## Usage
-After building the project, you can run the application to see it in action. The entry point is located in `src/index.ts`, where the main logic is implemented.
+4. **Carga la extensión en tu navegador Chromium**  
+   - Abre tu navegador (Chrome, Edge, Brave, etc.).
+   - Ve a `chrome://extensions/`.
+   - Activa el modo para desarrolladores.
+   - Arrastra la carpeta `dist` generada tras la compilación al área de extensiones para cargar la extensión.
 
-## Contributing
-Feel free to submit issues or pull requests if you have suggestions or improvements for the project.
+## Primer uso
 
-## License
-This project is licensed under the ISC License.
+Al abrir la extensión por primera vez, se te pedirá que elijas uno de los modelos de Gemini disponibles e introduzcas tu propia API Key para comenzar a utilizarla.
+
+## Tecnologías utilizadas
+
+- **TypeScript** (principal lenguaje de desarrollo)
+- **HTML** y **JavaScript** (para la interfaz de usuario y funcionalidades adicionales)
+- Herramientas de construcción y gestión de dependencias con **npm**
+
+## Contribución
+
+Si deseas contribuir, abre un _issue_ o realiza un _pull request_ con tus sugerencias y mejoras.
+
+## Licencia
+
+Este proyecto se distribuye bajo la licencia MIT.
+
+---
+
+Desarrollado por [AdayCuestaCorrea](https://github.com/AdayCuestaCorrea)
